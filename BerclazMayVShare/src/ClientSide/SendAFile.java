@@ -1,67 +1,78 @@
+/*
+ * Projet VSShare, SendAFile
+ * Author: B. Berclaz x A. May
+ * Date creation: 24.10.2019
+ * Date last modification: 21.10.2019
+ */
+
 package ClientSide;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class SendAFile {
 
-    public SendAFile(Socket clientSocket){
-        try {
+	public SendAFile(Socket clientSocket) {
+		try {
 
-            File fileToSend = new File("C:\\temp\\test.txt");
+			File fileToSend = new File("C:\\temp\\test.txt");
 
-            String name = null ;
-            long length= 0 ;
+			String name = null;
+			long length = 0;
 
-            if (fileToSend.exists()){
-                name = fileToSend.getName();
-                length = fileToSend.length();
-            }else {
-                System.out.println("Selected file unlocatable.");
-            }
+			if (fileToSend.exists()) {
+				name = fileToSend.getName();
+				length = fileToSend.length();
+			} else {
+				System.out.println("Selected file unlocatable.");
+			}
 
-            System.out.println("Selected file name \t:\t" + name);
-            System.out.println("Selected file length \t:\t" + length);
+			System.out.println("Selected file name \t:\t" + name);
+			System.out.println("Selected file length \t:\t" + length);
 
-            //File information sender
-            PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
+			// File information sender
+			PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
 
-            pw.println(name);
-            System.out.println("File name sended \t:\t" + name);
-            pw.println(length);
-            System.out.println("File length sended \t:\t" + length);
-            //pw.close();
+			pw.println(name);
+			System.out.println("File name sended \t:\t" + name);
+			pw.println(length);
+			System.out.println("File length sended \t:\t" + length);
+			// pw.close();
 
-            //File sender
-            while (true){
-                OutputStream os = clientSocket.getOutputStream();
+			// File sender
+			while (true) {
+				OutputStream os = clientSocket.getOutputStream();
 
-                byte [] myByteArray = new byte[(int)fileToSend.length()];
+				byte[] myByteArray = new byte[(int) fileToSend.length()];
 
-                //os.write(Integer.parseInt(fileToSend.getName()));
+				// os.write(Integer.parseInt(fileToSend.getName()));
 
-                FileInputStream fis = new FileInputStream(fileToSend);
+				FileInputStream fis = new FileInputStream(fileToSend);
 
-                BufferedInputStream bis = new BufferedInputStream(fis);
+				BufferedInputStream bis = new BufferedInputStream(fis);
 
-                bis.read(myByteArray, 0, myByteArray.length);
+				bis.read(myByteArray, 0, myByteArray.length);
 
-                os.write(myByteArray);
-                os.flush();
+				os.write(myByteArray);
+				os.flush();
 
-                System.out.print("Data file sended : ");
-                for (int i=0; i<myByteArray.length; i++){
-                    System.out.print(myByteArray[i]);
-                }
+				System.out.print("Data file sended : ");
+				for (int i = 0; i < myByteArray.length; i++) {
+					System.out.print(myByteArray[i]);
+				}
 
-                clientSocket.close();
+				clientSocket.close();
 
-                System.out.println();
-                System.out.println("Closing Socket...");
-            }
+				System.out.println();
+				System.out.println("Closing Socket...");
+			}
 
-        }catch (Exception e){
+		} catch (Exception e) {
 
-        }
-    }
+		}
+	}
 }
