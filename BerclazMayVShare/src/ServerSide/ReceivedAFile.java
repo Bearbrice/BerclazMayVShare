@@ -7,9 +7,7 @@
 
 package ServerSide;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class ReceivedAFile {
@@ -17,13 +15,19 @@ public class ReceivedAFile {
 	public ReceivedAFile(Socket serverSocket, int clientNumber) {
 
 		try {
-//            BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-//            String fileName = buffin.readLine();
-//            System.out.println("File name received\t\t:\t" + fileName);
-//            int fileLength = Integer.parseInt(buffin.readLine());
-//            System.out.println("File length received\t:\t" + fileLength);
-//            //System.out.println("File bytes\t:\t" + buffin.readLine());
-//            //buffin.close();
+			//Asking for the file
+			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
+			String question = "Entrer le chemin du fichier :";
+			pw.println(question);
+
+			//Getting the file
+			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+            String fileName = buffin.readLine();
+            System.out.println("File name received\t\t:\t" + fileName);
+            int fileLength = Integer.parseInt(buffin.readLine());
+            System.out.println("File length received\t:\t" + fileLength);
+            //System.out.println("File bytes\t:\t" + buffin.readLine());
+            //buffin.close();
 
 			byte[] myByteArray = new byte[100]; // need to get the length
 

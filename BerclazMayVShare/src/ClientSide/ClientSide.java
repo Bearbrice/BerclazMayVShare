@@ -20,6 +20,7 @@ public class ClientSide {
 		Socket clientSocket;
 		InetAddress serverAddress;
 		String serverName = "172.22.22.150";
+		serverName = "192.168.1.110";
 		int port = 45000;
 		Scanner scan = new Scanner(System.in);
 
