@@ -57,18 +57,25 @@ public class SendAFile {
 
 				os.flush();
 
-				System.out.print("Data file sended : ");
+//				System.out.print("Data file sended : ");
 				for (int i = 0; i < myByteArray.length; i++) {
-					System.out.print(myByteArray[i]);
+					System.out.println(myByteArray[i]);
 				}
 
-				byte[] message = myByteArray;
-				Socket socket = clientSocket;
-				DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
-				dOut.writeInt(message.length); // write length of the message
-				dOut.write(message);           // write the message
+				InputStream in = new FileInputStream(fileToSend);
+				OutputStream out = clientSocket.getOutputStream();
 
-				os.write(myByteArray);
+				byte[] bytes = new byte[25];
+				int count;
+				while ((count = in.read(bytes)) > 0) {
+					out.write(bytes, 0, count);
+				}
+
+				for (int i = 0; i < bytes.length; i++) {
+					System.out.println(bytes[i]);
+				}
+
+//				os.write(myByteArray);
 
 				clientSocket.close();
 
