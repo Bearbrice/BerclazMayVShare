@@ -65,7 +65,7 @@ public class SendAFile {
 				InputStream in = new FileInputStream(fileToSend);
 				OutputStream out = clientSocket.getOutputStream();
 
-				byte[] bytes = new byte[25];
+				byte[] bytes = new byte[(int) length];
 				int count;
 				while ((count = in.read(bytes)) > 0) {
 					out.write(bytes, 0, count);
