@@ -16,9 +16,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AcceptClients implements Runnable {
+
+	static Logger myLogger;
 
 	private Socket clientSocketOnServer;
 	private int clientNumber;
@@ -30,9 +37,46 @@ public class AcceptClients implements Runnable {
 	public AcceptClients(Socket clientSocketOnServer, int clientCpt) {
 		this.clientSocketOnServer = clientSocketOnServer;
 		this.clientNumber = clientCpt;
+
 	}
 
 	public void run() {
+
+		/*-----------------------
+		 * LOGGER
+		 * INITIALISATION
+		 * --------------------*/
+		myLogger = Logger.getLogger("testing");
+		FileHandler fh = null;
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDateTime now = LocalDateTime.now();
+		// System.out.println(dtf.format(now));
+
+		String logFileName = "./Logs/LOG_" + dtf.format(now) + ".log";
+		// String logFileName = "./my.log";
+
+		try {
+			fh = new FileHandler(logFileName, true);
+			// fh = new FileHandler(logFileName, true); //if you want to add log to a file :
+			// false, for overwrite : true
+		} catch (SecurityException e1) {
+			e1.printStackTrace();
+			e1.getMessage();
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+
+		myLogger.addHandler(fh);
+
+		Logging.SocketFormatter formatter = new Logging.SocketFormatter();
+		fh.setFormatter(formatter);
+
+		/*-----------------------
+		 * LOGGER
+		 * INITIALISED
+		 * --------------------*/
+
 		System.out.println("Client number " + clientNumber + " is connected.");
 
 		try {
@@ -70,6 +114,7 @@ public class AcceptClients implements Runnable {
 				// Login and password
 				append(path, newLoginReceived);
 				append(path, newPwdReceived);
+				myLogger.log(Level.INFO, "New user added in DB : " + newLoginReceived);
 
 //				fw.write("\n"); // forcer le passage à la ligne
 //				fw.write(newLoginReceived); // écrire une ligne dans le fichier Users.txt
@@ -80,6 +125,7 @@ public class AcceptClients implements Runnable {
 
 				String newUserFolder = "C:\\temp\\VSShareServer\\" + newLoginReceived;
 				new File(newUserFolder).mkdirs();
+				myLogger.log(Level.INFO, "New folder created for the new user : " + newLoginReceived);
 
 				// Tell the client he is connected
 				pwFirst.println("Success");
@@ -115,6 +161,7 @@ public class AcceptClients implements Runnable {
 						if (x.equals(pwdReceived)) {
 							isCorrect = true;
 							pwFirst.println("Success");
+							myLogger.log(Level.INFO, "User connection accepted for : " + loginReceived);
 							break;
 						}
 					}
@@ -122,6 +169,7 @@ public class AcceptClients implements Runnable {
 
 				if (isCorrect == false) {
 					pwFirst.println("Refused");
+					myLogger.log(Level.WARNING, "Failed to connect with the username : " + loginReceived);
 					clientSocketOnServer.close();
 				}
 
@@ -156,7 +204,7 @@ public class AcceptClients implements Runnable {
 			serverMessage = new BufferedReader(new InputStreamReader(clientSocketOnServer.getInputStream()));
 
 			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
-					+ "2. Display list of accessible files\n" + ".3. Quit server\n"
+					+ "2. Display list of accessible files\n" + "3. Quit server\n"
 					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
 			pwFirst.println(first);
 
@@ -201,12 +249,14 @@ public class AcceptClients implements Runnable {
 			bufWriter.close();
 		} catch (IOException ex) {
 			// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
+			myLogger.log(Level.SEVERE, "Method append - Failed to list file");
 		} finally {
 			try {
 				bufWriter.close();
 				fileWriter.close();
 			} catch (IOException ex) {
 				// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
+				myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
 			}
 		}
 	}
