@@ -53,7 +53,7 @@ public class AcceptClients implements Runnable {
 		LocalDateTime now = LocalDateTime.now();
 		// System.out.println(dtf.format(now));
 
-		String logFileName = "./Logs/LOG_" + dtf.format(now) + ".log";
+		String logFileName = "BerclazMayVShare\\Logs\\LOG_" + dtf.format(now) + ".log";
 		// String logFileName = "./my.log";
 
 		try {
@@ -106,7 +106,7 @@ public class AcceptClients implements Runnable {
 
 //				FileWriter fw = new FileWriter(cloudUsers);
 
-				String path = "BerclazMayVShare\\VSShareCloud\\Users.txt";
+				String path = ".\\VSShareCloud\\Users.txt";
 
 				// Add a blank line
 				append(path, "");
@@ -123,7 +123,7 @@ public class AcceptClients implements Runnable {
 //
 //				fw.close();
 
-				String newUserFolder = "BerclazMayVShare\\VSShareCloud\\" + newLoginReceived;
+				String newUserFolder = ".\\VSShareCloud\\" + newLoginReceived;
 				new File(newUserFolder).mkdirs();
 				myLogger.log(Level.INFO, "New folder created for the new user : " + newLoginReceived);
 
@@ -145,7 +145,7 @@ public class AcceptClients implements Runnable {
 				// System.out.println(pwdReceived);
 
 				// Check if login is correct or not
-				File users = new File("BerclazMayVShare\\VSShareCloud\\Users.txt");
+				File users = new File(".\\VSShareCloud\\Users.txt");
 
 				BufferedReader br = new BufferedReader(new FileReader(users));
 
