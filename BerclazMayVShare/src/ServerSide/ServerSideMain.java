@@ -34,6 +34,7 @@ public class ServerSideMain {
 
 				// Starting the thread
 				t.start();
+				System.out.print("TEST");
 			}
 
 		} catch (Exception e) {
