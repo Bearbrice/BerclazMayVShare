@@ -62,7 +62,7 @@ public class AcceptClients implements Runnable {
 
 //				FileWriter fw = new FileWriter(cloudUsers);
 
-				String path = "C:\\temp\\VSShareServer\\Users.txt";
+				String path = "BerclazMayVShare\\VSShareCloud\\Users.txt";
 
 				// Add a blank line
 				append(path, "");
@@ -78,7 +78,7 @@ public class AcceptClients implements Runnable {
 //
 //				fw.close();
 
-				String newUserFolder = "C:\\temp\\VSShareServer\\" + newLoginReceived;
+				String newUserFolder = "BerclazMayVShare\\VSShareCloud\\" + newLoginReceived;
 				new File(newUserFolder).mkdirs();
 
 				// Tell the client he is connected
@@ -99,7 +99,7 @@ public class AcceptClients implements Runnable {
 				// System.out.println(pwdReceived);
 
 				// Check if login is correct or not
-				File users = new File("C:\\temp\\VSShareServer\\Users.txt");
+				File users = new File("BerclazMayVShare\\VSShareCloud\\Users.txt");
 
 				BufferedReader br = new BufferedReader(new FileReader(users));
 
@@ -127,8 +127,8 @@ public class AcceptClients implements Runnable {
 
 			}
 
-			String first = "Voici les actions disponibles :\n" + "1. Uploader un fichier\n"
-					+ "2. Supprimer un fichier\n" + "3. Quitter le server\n"
+			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
+					+ "2. Display list of accessible files\n" + "3. Quit server\n"
 					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
 			pwFirst.println(first);
 
@@ -156,7 +156,7 @@ public class AcceptClients implements Runnable {
 			serverMessage = new BufferedReader(new InputStreamReader(clientSocketOnServer.getInputStream()));
 
 			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
-					+ "2. Display list of accessible files\n" + ".3. Quit server\n"
+					+ "2. Display list of accessible files\n" + "3. Quit server\n"
 					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
 			pwFirst.println(first);
 
@@ -177,7 +177,8 @@ public class AcceptClients implements Runnable {
 		switch (choosen) {
 		// Receive a file
 		case 1:
-			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, clientNumber);
+			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, loginReceived);
+			performAction();
 			break;
 		// Send the list of file
 		case 2:

@@ -18,14 +18,14 @@ public class ServerSideMain {
 		ServerSocket myListeningSocket;
 		Socket serverSocket = null;
 		InetAddress localAddress = null;
-		int port = 45000;
+		int port = 45003;
 		ServerSocket mySkServer;
 		int clientCpt = 1;
 
 		try {
 			System.out.println("<--- Start listening to clients --->");
 
-			mySkServer = new ServerSocket(45000, 10, localAddress);
+			mySkServer = new ServerSocket(port, 10, localAddress);
 
 			while (true) {
 				Socket clientSocket = mySkServer.accept();

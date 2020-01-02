@@ -23,12 +23,12 @@ public class ClientSide {
 	public static InetAddress serverAddress;
 	public static String serverName = "172.22.22.150";
 
-	public static int port = 45000;
+	public static int port = 45003;
 
 	public static void main(String[] args) {
 		serverName = "192.168.1.110";
 		serverName = "192.168.43.190"; // brice
-		// serverName = "192.168.43.154"; //me
+		 serverName = "172.20.10.9"; //me
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
@@ -117,6 +117,7 @@ public class ClientSide {
 			// Send a file
 			case 1:
 				SendAFile saf = new SendAFile(clientSocket);
+//				chooseAction();
 				break;
 			case 2:
 				ReceiveList rl = new ReceiveList(clientSocket);

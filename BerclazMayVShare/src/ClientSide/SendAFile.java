@@ -9,15 +9,19 @@ package ClientSide;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class SendAFile {
+
+	Scanner scan = new Scanner(System.in);
 
 	public SendAFile(Socket clientSocket) {
 		try {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			System.out.println(serverMessage.readLine());
 
-			File fileToSend = new File("C:\\temp\\test.txt");
+			File fileToSend = new File(scan.nextLine());
+//			File fileToSend = new File("C:\\temp\\test.txt");
 
 			String name = null;
 			long length = 0;
@@ -43,24 +47,24 @@ public class SendAFile {
 
 			// File sender
 			while (true) {
-				OutputStream os = clientSocket.getOutputStream();
-
-				byte[] myByteArray = new byte[(int) fileToSend.length()];
-
-				// os.write(Integer.parseInt(fileToSend.getName()));
-
-				FileInputStream fis = new FileInputStream(fileToSend);
-
-				BufferedInputStream bis = new BufferedInputStream(fis);
-
-				bis.read(myByteArray, 0, myByteArray.length);
-
-				os.flush();
-
-//				System.out.print("Data file sended : ");
-				for (int i = 0; i < myByteArray.length; i++) {
-					System.out.println(myByteArray[i]);
-				}
+//				OutputStream os = clientSocket.getOutputStream();
+//
+//				byte[] myByteArray = new byte[(int) fileToSend.length()];
+//
+//				// os.write(Integer.parseInt(fileToSend.getName()));
+//
+//				FileInputStream fis = new FileInputStream(fileToSend);
+//
+//				BufferedInputStream bis = new BufferedInputStream(fis);
+//
+//				bis.read(myByteArray, 0, myByteArray.length);
+//
+//				os.flush();
+//
+////				System.out.print("Data file sended : ");
+//				for (int i = 0; i < myByteArray.length; i++) {
+//					System.out.println(myByteArray[i]);
+//				}
 
 				InputStream in = new FileInputStream(fileToSend);
 				OutputStream out = clientSocket.getOutputStream();
@@ -72,19 +76,18 @@ public class SendAFile {
 				}
 
 				for (int i = 0; i < bytes.length; i++) {
-					System.out.println(bytes[i]);
+					System.out.print(bytes[i]);
 				}
-
-//				os.write(myByteArray);
 
 				clientSocket.close();
 
-				System.out.println();
+//				System.out.println();
 				System.out.println("Closing Socket...");
+//				break;
 			}
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 }

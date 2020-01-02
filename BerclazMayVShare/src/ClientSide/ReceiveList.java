@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class ReceiveList {
+
 	public ReceiveList(Socket clientSocket) {
 		try {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -16,6 +17,6 @@ public class ReceiveList {
 		} catch (Exception e) {
 
 		}
-
 	}
+
 }

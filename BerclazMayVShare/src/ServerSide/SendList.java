@@ -16,7 +16,7 @@ public class SendList {
 			e.printStackTrace();
 		}
 
-		String dirName = "C:\\temp\\VSShareServer\\" + login;
+		String dirName = "BerclazMayVShare\\VSShareCloud\\" + login;
 
 		File fileName = new File(dirName);
 		File[] fileList = fileName.listFiles();

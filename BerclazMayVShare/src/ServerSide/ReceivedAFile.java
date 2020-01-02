@@ -20,7 +20,7 @@ import java.net.Socket;
 
 public class ReceivedAFile {
 
-	public ReceivedAFile(Socket serverSocket, int clientNumber) {
+	public ReceivedAFile(Socket serverSocket, String loginReceived) {
 
 		try {
 			// Asking for the file
@@ -49,16 +49,16 @@ public class ReceivedAFile {
 				System.out.println("Can't get socket input stream. ");
 			}
 
-			// Creating a directory for our drive if not existing
-			try {
-				String cloudPath = "C:\\temp\\VSShareDev";
-				new File(cloudPath).mkdirs();
-			} catch (Exception e) {
-				System.out.println("Can't create the directory for the drive ");
-			}
+//			// Creating a directory for our drive if not existing
+//			try {
+//				String cloudPath = "BerclazMayVShare\\VSShareCloud";
+//				new File(cloudPath).mkdirs();
+//			} catch (Exception e) {
+//				System.out.println("Can't create the directory for the drive ");
+//			}
 
 			try {
-				out = new FileOutputStream("C:\\temp\\VSShareDev\\test.txt");
+				out = new FileOutputStream("BerclazMayVShare\\VSShareCloud\\" + loginReceived + "\\" + fileName);
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
 			}
@@ -80,7 +80,7 @@ public class ReceivedAFile {
 			out.close();
 			in.close();
 
-			serverSocket.close();
+//			serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
