@@ -8,6 +8,8 @@
 package ServerSide;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -30,14 +32,44 @@ public class AcceptClients implements Runnable {
 
 		try {
 			PrintWriter pwFirst = new PrintWriter(clientSocketOnServer.getOutputStream(), true);
-			String first = "Voici les actions qui te sont disponibles :\n" + "1. Uploader un fichier\n"
+			BufferedReader serverMessage = new BufferedReader(
+					new InputStreamReader(clientSocketOnServer.getInputStream()));
+
+			String login = "Enter your username";
+			pwFirst.println(login);
+
+			String loginReceived = serverMessage.readLine();
+
+			String pwd = "Enter your password";
+			pwFirst.println(pwd);
+
+			String pwdReceived = serverMessage.readLine();
+
+			// Check if login is correct or not
+			File users = new File("C:\\temp\\VSShareServer\\Users.txt");
+
+			BufferedReader br = new BufferedReader(new FileReader(users));
+
+			Boolean isCorrect = false;
+			String st;
+			while ((st = br.readLine()) != null) {
+				if (st == loginReceived) {
+					if (br.readLine() == pwdReceived) {
+						isCorrect = true;
+						break;
+					} else {
+						pwFirst.println("Connection refused, reload the server to try again");
+					}
+				}
+			}
+
+			String first = "Voici les actions disponibles :\n" + "1. Uploader un fichier\n"
 					+ "2. Supprimer un fichier\n" + "3. Quitter le server\n"
 					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
 			pwFirst.println(first);
 
 			// devBBE
-			BufferedReader serverMessage = new BufferedReader(
-					new InputStreamReader(clientSocketOnServer.getInputStream()));
+
 			String choice = serverMessage.readLine();
 
 			// devBBE

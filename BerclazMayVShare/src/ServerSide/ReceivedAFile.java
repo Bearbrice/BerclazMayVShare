@@ -8,6 +8,7 @@
 package ServerSide;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,8 +49,16 @@ public class ReceivedAFile {
 				System.out.println("Can't get socket input stream. ");
 			}
 
+			// Creating a directory for our drive if not existing
 			try {
-				out = new FileOutputStream("C:\\temp\\Remake\\test.txt");
+				String cloudPath = "C:\\temp\\VSShareDev";
+				new File(cloudPath).mkdirs();
+			} catch (Exception e) {
+				System.out.println("Can't create the directory for the drive ");
+			}
+
+			try {
+				out = new FileOutputStream("C:\\temp\\VSShareDev\\test.txt");
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
 			}
@@ -63,51 +72,14 @@ public class ReceivedAFile {
 
 			out.flush();
 
+			System.out.print("Bytes received : ");
 			for (int i = 0; i < myByteArray.length; i++) {
-				System.out.print(myByteArray[i]);
+				System.out.print(myByteArray[i] + "-");
 			}
 
 			out.close();
 			in.close();
 
-//			byte[] myByteArray = new byte[fileLength]; // need to get the length
-//
-//			InputStream is = serverSocket.getInputStream();
-//
-//			FileOutputStream fos = new FileOutputStream("C:\\temp\\Remake\\test.txt");
-//			BufferedOutputStream bos = new BufferedOutputStream(fos);
-//
-//			int bytesRead = is.read(myByteArray, 0, myByteArray.length);
-//			int current = bytesRead;
-//
-//			// retrieved on stackoverflow
-//			int length = is.read(); // read length of incoming message
-//			if (length > 0) {
-//				byte[] message = new byte[length];
-//				is.read(message, 0, message.length); // read the message
-//			}
-
-//			do {
-//				bytesRead = is.read(myByteArray, current, (myByteArray.length - current));
-//				if (bytesRead >= 0)
-//					current += bytesRead;
-//			} while (bytesRead > -1);
-
-//			do {
-//				bytesRead = is.read(myByteArray, current, (myByteArray.length - current));
-//				if (bytesRead >= 0) {
-//					current += bytesRead;
-//				}
-//			} while (bytesRead > -1);
-
-//			System.out.print("File data received from client " + clientNumber + " : ");
-//			for (int i = 0; i < myByteArray.length; i++) {
-//				System.out.print(myByteArray[i]);
-//			}
-//
-//			bos.write(myByteArray, 0, current);
-//			bos.flush();
-//			bos.close();
 			serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
