@@ -24,6 +24,7 @@ public class SendList {
 		for (File file : fileList) {
 			printWriter.println(file.getName());
 		}
+
 	}
 
 }
