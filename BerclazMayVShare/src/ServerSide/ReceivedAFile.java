@@ -54,7 +54,7 @@ public class ReceivedAFile {
 				System.out.println("File not found. ");
 			}
 
-			byte[] myByteArray = new byte[25];
+			byte[] myByteArray = new byte[fileLength];
 
 			int count;
 			while ((count = in.read(myByteArray)) > 0) {
