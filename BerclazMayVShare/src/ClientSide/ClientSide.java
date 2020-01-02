@@ -34,8 +34,36 @@ public class ClientSide {
 			clientSocket = new Socket(serverAddress, port);
 			System.out.println("Successfully connected to the server : " + serverAddress);
 
-			// First, listen the server
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+
+			// Choose wisely
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+			String welcome = scan.nextLine();
+			printWriter.println(welcome);
+
+			// Login request (register or connect)
+			System.out.println(serverMessage.readLine());
+			String myLogin = scan.nextLine();
+			printWriter.println(myLogin);
+
+			// Password request (register or connect)
+			System.out.println(serverMessage.readLine());
+			String myPwd = scan.nextLine();
+			printWriter.println(myPwd);
+
+			String x = serverMessage.readLine();
+
+			if (x.equals("Success")) {
+				System.out.println("You are now connected");
+			} else {
+				System.out.println("Failed to connect");
+				clientSocket.close();
+			}
+
+			// Action reader (to perform an interaction with the server)
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
@@ -44,10 +72,10 @@ public class ClientSide {
 
 			// devBBE
 			int myChoice = scan.nextInt();
-			PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
 			printWriter.println(myChoice);
 
 			executeAction(myChoice);
+
 		} catch (Exception e) {
 			System.out.println("Cannot reach the server, the server is inactive or try again");
 			e.printStackTrace();
@@ -62,6 +90,7 @@ public class ClientSide {
 				SendAFile saf = new SendAFile(clientSocket);
 				break;
 			case 2:
+				ReceiveList rl = new ReceiveList(clientSocket);
 
 				break;
 			case 3:
@@ -73,4 +102,5 @@ public class ClientSide {
 		}
 
 	}
+
 }
