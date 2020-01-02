@@ -7,17 +7,15 @@
 
 package ClientSide;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class SendAFile {
 
 	public SendAFile(Socket clientSocket) {
 		try {
+			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			System.out.println(serverMessage.readLine());
 
 			File fileToSend = new File("C:\\temp\\test.txt");
 
@@ -57,13 +55,20 @@ public class SendAFile {
 
 				bis.read(myByteArray, 0, myByteArray.length);
 
-				os.write(myByteArray);
 				os.flush();
 
 				System.out.print("Data file sended : ");
 				for (int i = 0; i < myByteArray.length; i++) {
 					System.out.print(myByteArray[i]);
 				}
+
+				byte[] message = myByteArray;
+				Socket socket = clientSocket;
+				DataOutputStream dOut = new DataOutputStream(socket.getOutputStream());
+				dOut.writeInt(message.length); // write length of the message
+				dOut.write(message);           // write the message
+
+				os.write(myByteArray);
 
 				clientSocket.close();
 

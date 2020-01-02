@@ -39,6 +39,7 @@ public class AcceptClients implements Runnable {
 			BufferedReader serverMessage = new BufferedReader(
 					new InputStreamReader(clientSocketOnServer.getInputStream()));
 			String choice = serverMessage.readLine();
+
 			// devBBE
 			int choosen = Integer.parseInt(choice);
 			executeAction(choosen);

@@ -7,6 +7,8 @@
 
 package ClientSide;
 
+import ServerSide.ReceivedAFile;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,13 +18,17 @@ import java.util.Scanner;
 
 public class ClientSide {
 
+    public static Scanner scan = new Scanner(System.in);
+
+    public static Socket clientSocket;
+    public static InetAddress serverAddress;
+    public static String serverName = "172.22.22.150";
+
+    public static int port = 45000;
+
 	public static void main(String[] args) {
-		Socket clientSocket;
-		InetAddress serverAddress;
-		String serverName = "172.22.22.150";
-		serverName = "192.168.1.110";
-		int port = 45000;
-		Scanner scan = new Scanner(System.in);
+        serverName = "192.168.1.110";
+        serverName = "192.168.43.190"; //brice
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
@@ -39,12 +45,32 @@ public class ClientSide {
 
 			// devBBE
 			int myChoice = scan.nextInt();
-			PrintWriter pwFirst = new PrintWriter(clientSocket.getOutputStream(), true);
-			pwFirst.println(myChoice);
+			PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+            printWriter.println(myChoice);
 
+			executeAction(myChoice);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+    public static void executeAction(int myChoice) {
+	    try{
+            switch (myChoice) {
+                //Send a file
+                case 1:
+                    SendAFile saf = new SendAFile(clientSocket);
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+            }
+        } catch (Exception e){
+	        e.printStackTrace();
+        }
+
+    }
 }
