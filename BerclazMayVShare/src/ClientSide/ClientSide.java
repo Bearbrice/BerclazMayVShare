@@ -8,6 +8,7 @@
 package ClientSide;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -82,6 +83,34 @@ public class ClientSide {
 		}
 	}
 
+	public static void chooseAction() {
+		BufferedReader serverMessage;
+		PrintWriter printWriter = null;
+
+		try {
+			serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+			printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+
+			// Action reader (to perform an interaction with the server)
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// devBBE
+		int myChoice = scan.nextInt();
+		printWriter.println(myChoice);
+
+		executeAction(myChoice);
+	}
+
 	public static void executeAction(int myChoice) {
 		try {
 			switch (myChoice) {
@@ -91,7 +120,7 @@ public class ClientSide {
 				break;
 			case 2:
 				ReceiveList rl = new ReceiveList(clientSocket);
-
+				chooseAction();
 				break;
 			case 3:
 

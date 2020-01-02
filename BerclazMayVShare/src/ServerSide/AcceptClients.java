@@ -139,13 +139,37 @@ public class AcceptClients implements Runnable {
 			int choosen = Integer.parseInt(choice);
 			executeAction(choosen);
 
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		// ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, clientNumber);
+	}
+
+	public void performAction() {
+		PrintWriter pwFirst;
+		BufferedReader serverMessage;
+
+		try {
+			pwFirst = new PrintWriter(clientSocketOnServer.getOutputStream(), true);
+
+			serverMessage = new BufferedReader(new InputStreamReader(clientSocketOnServer.getInputStream()));
+
+			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
+					+ "2. Display list of accessible files\n" + ".3. Quit server\n"
+					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
+			pwFirst.println(first);
+
+			// devBBE
+			String choice = serverMessage.readLine();
+
+			// devBBE
+			int choosen = Integer.parseInt(choice);
+			executeAction(choosen);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// DEV BRICE
@@ -158,6 +182,7 @@ public class AcceptClients implements Runnable {
 		// Send the list of file
 		case 2:
 			SendList sl = new SendList(clientSocketOnServer, loginReceived);
+			performAction();
 			break;
 		case 3:
 			break;
