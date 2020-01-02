@@ -1,3 +1,10 @@
+/*
+ * Projet VSShare, SendList
+ * Author: B. Berclaz x A. May
+ * Date creation: 02.01.2020
+ * Date last modification: 02.01.2020
+ */
+
 package ClientSide;
 
 import java.io.BufferedReader;

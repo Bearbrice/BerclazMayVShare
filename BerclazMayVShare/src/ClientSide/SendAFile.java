@@ -2,12 +2,19 @@
  * Projet VSShare, SendAFile
  * Author: B. Berclaz x A. May
  * Date creation: 24.10.2019
- * Date last modification: 21.10.2019
+ * Date last modification: 02.01.2020
  */
 
 package ClientSide;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class SendAFile {
