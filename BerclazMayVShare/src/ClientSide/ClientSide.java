@@ -71,6 +71,10 @@ public class ClientSide {
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
 
+			// +2
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+
 			// devBBE
 			int myChoice = scan.nextInt();
 			printWriter.println(myChoice);
@@ -97,6 +101,10 @@ public class ClientSide {
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+			System.out.println(serverMessage.readLine());
+
+			// +2
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
 
@@ -128,6 +136,16 @@ public class ClientSide {
 			case 3:
 				DeleteFileOnServer dfos = new DeleteFileOnServer(clientSocket);
 				chooseAction();
+				break;
+			// Download file from the server
+			case 4:
+				// ADD HERE
+
+				chooseAction();
+				break;
+			// End of the programm
+			case 5:
+				// END
 				break;
 			}
 		} catch (Exception e) {

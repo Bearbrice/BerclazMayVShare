@@ -175,9 +175,10 @@ public class AcceptClients implements Runnable {
 
 			}
 
-			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
-					+ "2. Display list of accessible files\n" + "3. Quit server\n"
-					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
+			String first = "Here are the following actions :\n" + "1. Upload a file\n"
+					+ "2. Display list of accessible files\n" + "3. Delete a file\n"
+					+ "4. Download a file from the server\n" + "5. Quit the server\n"
+					+ "Please, enter 1,2,3,4 or 5 to perform an action : ";
 			pwFirst.println(first);
 
 			// devBBE
@@ -212,9 +213,10 @@ public class AcceptClients implements Runnable {
 				e.printStackTrace();
 			}
 
-			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
-					+ "2. Display list of accessible files\n" + "3. Quit server\n"
-					+ "Tapper 1,2 ou 3 pour effectuer une action : ";
+			String first = "Here are the following actions :\n" + "1. Upload a file\n"
+					+ "2. Display list of accessible files\n" + "3. Delete a file\n"
+					+ "4. Download a file from the server\n" + "5. Quit the server\n"
+					+ "Please, enter 1,2,3,4 or 5 to perform an action : ";
 			pwFirst.println(first);
 
 			// devBBE
@@ -223,6 +225,8 @@ public class AcceptClients implements Runnable {
 			// devBBE
 			int choosen = Integer.parseInt(choice);
 			executeAction(choosen);
+
+			clientSocketOnServer.close();
 
 			// performAction();
 
@@ -250,9 +254,19 @@ public class AcceptClients implements Runnable {
 			// working
 			performAction();
 			break;
+		// Delete a file
 		case 3:
 			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived);
 			performAction();
+			break;
+		// Send a file to the client
+		case 4:
+			// ADD HERE
+
+			performAction();
+			break;
+		// End of the program
+		case 5:
 			break;
 		}
 	}

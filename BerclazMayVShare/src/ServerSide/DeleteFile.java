@@ -1,3 +1,10 @@
+/*
+ * Projet VSShare, DeleteFileOnServer
+ * Author: B. Berclaz x A. May
+ * Date creation: 03.01.2020
+ * Date last modification: 03.01.2020
+ */
+
 package ServerSide;
 
 import java.io.BufferedReader;
@@ -14,6 +21,7 @@ public class DeleteFile {
 	public DeleteFile(Socket serverSocket, String login) {
 
 		PrintWriter pw;
+		// ProcessBuilder builder;
 		try {
 			pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
@@ -37,8 +45,21 @@ public class DeleteFile {
 
 			// Path path = Paths.get(".\\VSShareCloud\\" + login + "\\PWD.txt");
 
+			// Search in the PWD text file of the user
 			File pwd = new File(".\\VSShareCloud\\" + login + "\\PWD.txt");
 			BufferedReader br = new BufferedReader(new FileReader(pwd));
+
+			// The file to delete
+			File fToDelete = new File(".\\VSShareCloud\\" + login + "\\" + fileToDelete);
+
+//			String path = pwd.getAbsolutePath();
+//			System.out.println(path);
+
+			String path2 = fToDelete.getCanonicalPath();
+			System.out.println(path2);
+
+//			String path3 = pwd.getParent();
+//			System.out.println(path3);
 
 			Boolean isCorrect = false;
 			String line;
@@ -53,12 +74,28 @@ public class DeleteFile {
 						isCorrect = true;
 
 						// delete the file from the server repository
-						boolean success = pwd.delete();
+						// pw.close();
 
-						System.out.print(success);
+						// String command = "del " + path2;
+
+//						builder = new ProcessBuilder("cmd.exe", "/c", command);
+//
+//						builder.redirectErrorStream(true);
+//						Process p = null;
+//						try {
+//							p = builder.start();
+//						} catch (IOException e1) {
+//							e1.printStackTrace();
+//						}
+
+						// Delete the file on exit
+						fToDelete.deleteOnExit();
+
+						// System.out.print(success);
 
 						// Files.delete(path);
 
+						pw = new PrintWriter(serverSocket.getOutputStream(), true);
 						pw.println("Success");
 						// myLogger.log(Level.INFO, "User connection accepted for : " + loginReceived);
 						break;
