@@ -145,7 +145,7 @@ public class AcceptClients implements Runnable {
 				// System.out.println(pwdReceived);
 
 				// Check if login is correct or not
-				File users = new File("BerclazMayVShare\\VSShareCloud\\Users.txt");
+				File users = new File(".\\VSShareCloud\\Users.txt");
 
 				BufferedReader br = new BufferedReader(new FileReader(users));
 
@@ -204,11 +204,11 @@ public class AcceptClients implements Runnable {
 
 			serverMessage = new BufferedReader(new InputStreamReader(clientSocketOnServer.getInputStream()));
 
-			// It is a function to prevent the program to go too fast
+			// It is a function to prevent the program to go too fast and let the client
+			// interract
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -223,9 +223,13 @@ public class AcceptClients implements Runnable {
 			// devBBE
 			int choosen = Integer.parseInt(choice);
 			executeAction(choosen);
+
+			// performAction();
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			System.out.print("performAction error");
 		}
 	}
 
@@ -234,16 +238,21 @@ public class AcceptClients implements Runnable {
 		switch (choosen) {
 		// Receive a file
 		case 1:
+			@SuppressWarnings("unused")
 			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, loginReceived);
 			performAction();
+			// SendList sl1 = new SendList(clientSocketOnServer, loginReceived);
 			break;
 		// Send the list of file
 		case 2:
 			@SuppressWarnings("unused")
-			SendList sl = new SendList(clientSocketOnServer, loginReceived);
+			SendList sl2 = new SendList(clientSocketOnServer, loginReceived);
+
+			// working
 			performAction();
 			break;
 		case 3:
+
 			break;
 		}
 	}

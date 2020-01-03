@@ -24,7 +24,7 @@ public class ReceivedAFile {
 		try {
 			// Asking for the file
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
-			String question = "Entrer le chemin du fichier :";
+			String question = "Enter the path of the file :";
 			pw.println(question);
 
 			// Getting the file
@@ -64,11 +64,23 @@ public class ReceivedAFile {
 
 			byte[] myByteArray = new byte[fileLength];
 
-			int count;
-			while ((count = in.read(myByteArray)) > 0) {
-				out.write(myByteArray, 0, count);
-				System.out.println("BOUCLE");
-			}
+//			FileInputStream fis = new FileInputStream(myFile);
+//			
+//			BufferedInputStream bis = new BufferedInputStream(fis);
+//			
+//			//the byte array, where you start, where you end
+			in.read(myByteArray, 0, myByteArray.length);
+
+			out.write(myByteArray);
+//			
+//			os.write(mybytesarray);
+//			os.flush();
+
+//			int count;
+//			while ((count = in.read(myByteArray)) > 0) {
+//				out.write(myByteArray, 0, count);
+//				System.out.println("BOUCLE");
+//			}
 
 			out.flush();
 
@@ -79,8 +91,8 @@ public class ReceivedAFile {
 				System.out.print(myByteArray[i] + "-");
 			}
 
-			out.close();
-			in.close();
+//			out.close();
+//			in.close();
 
 			// serverSocket.close();
 		} catch (Exception e) {
