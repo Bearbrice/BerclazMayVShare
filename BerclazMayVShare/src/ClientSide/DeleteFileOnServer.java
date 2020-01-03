@@ -36,7 +36,7 @@ public class DeleteFileOnServer {
 
 			// Password
 			if (serverMessage.readLine().equals("Success")) {
-				System.out.println("The file : " + fileName + " has been successfully deleted.");
+				System.out.println("The file : " + fileName + " will be deleted when you leave the server");
 			} else {
 				System.out.println("Wrong password or file name, please try again");
 			}

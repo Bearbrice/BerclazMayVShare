@@ -11,15 +11,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SendList {
 
-	public SendList(Socket serverSocket, String login) {
+	// Constructor
+	public SendList(Socket serverSocket, String login, Logger myLogger) {
 
 		PrintWriter printWriter = null;
 		try {
 			printWriter = new PrintWriter(serverSocket.getOutputStream(), true);
 		} catch (IOException e) {
+			myLogger.log(Level.SEVERE, "Impossible to initialise the PrintWriter.");
 			e.printStackTrace();
 		}
 
@@ -35,6 +39,7 @@ public class SendList {
 			}
 		}
 		// Tell the client you sent everything
+		myLogger.log(Level.INFO, "The list of available files for the user " + login + " has been correctly sent");
 		printWriter.println("DONE");
 
 	}
