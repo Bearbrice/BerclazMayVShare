@@ -247,12 +247,12 @@ public class AcceptClients implements Runnable {
 		case 2:
 			@SuppressWarnings("unused")
 			SendList sl2 = new SendList(clientSocketOnServer, loginReceived);
-
 			// working
 			performAction();
 			break;
 		case 3:
-
+			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived);
+			performAction();
 			break;
 		}
 	}

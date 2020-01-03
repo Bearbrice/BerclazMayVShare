@@ -8,8 +8,10 @@
 package ServerSide;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,6 +40,16 @@ public class ReceivedAFile {
 			System.out.println("File length received :" + fileLength);
 			// System.out.println("File bytes\t:\t" + buffin.readLine());
 			// buffin.close();
+
+			// DEVELOPPEMENT
+			String question2 = "Enter a password for the file";
+			pw.println(question2);
+
+			String password;
+			password = buffin.readLine();
+
+			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", fileName);
+			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", password);
 
 			InputStream in = null;
 			OutputStream out = null;
@@ -97,6 +109,30 @@ public class ReceivedAFile {
 			// serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void append(String filename, String text) {
+		BufferedWriter bufWriter = null;
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(filename, true);
+			bufWriter = new BufferedWriter(fileWriter);
+			// Insérer un saut de ligne
+			bufWriter.newLine();
+			bufWriter.write(text);
+			bufWriter.close();
+		} catch (IOException ex) {
+			// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
+			// myLogger.log(Level.SEVERE, "Method append - Failed to list file");
+		} finally {
+			try {
+				bufWriter.close();
+				fileWriter.close();
+			} catch (IOException ex) {
+				// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
+				// myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
+			}
 		}
 	}
 }

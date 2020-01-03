@@ -29,7 +29,10 @@ public class SendList {
 		File[] fileList = fileName.listFiles();
 
 		for (File file : fileList) {
-			printWriter.println("- " + file.getName());
+			// Test for not displaying the file with the passwords to the user
+			if (!(file.getName().equals("PWD.txt"))) {
+				printWriter.println("- " + file.getName());
+			}
 		}
 		// Tell the client you sent everything
 		printWriter.println("DONE");

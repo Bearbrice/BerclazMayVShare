@@ -123,12 +123,11 @@ public class ClientSide {
 				break;
 			case 2:
 				ReceiveList rl = new ReceiveList(clientSocket);
-
-				// working !!!
 				chooseAction();
 				break;
 			case 3:
-				// END OF THE PROGRAM
+				DeleteFileOnServer dfos = new DeleteFileOnServer(clientSocket);
+				chooseAction();
 				break;
 			}
 		} catch (Exception e) {

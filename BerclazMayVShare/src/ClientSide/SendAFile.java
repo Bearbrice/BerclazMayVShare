@@ -47,6 +47,7 @@ public class SendAFile {
 
 			pw.println(name);
 			System.out.println("File name sended \t:\t" + name);
+
 			pw.println(length);
 			System.out.println("File length sended \t:\t" + length);
 			// pw.close();
@@ -71,6 +72,12 @@ public class SendAFile {
 //				for (int i = 0; i < myByteArray.length; i++) {
 //					System.out.println(myByteArray[i]);
 //				}
+
+			// password
+			System.out.println(serverMessage.readLine());
+			String pwd = scan.nextLine();
+			pw.println(pwd);
+			System.out.println("Password sended \t:\t" + pwd);
 
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = clientSocket.getOutputStream();
