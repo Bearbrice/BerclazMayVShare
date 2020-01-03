@@ -128,7 +128,7 @@ public class ClientSide {
 				chooseAction();
 				break;
 			case 3:
-
+				// END OF THE PROGRAM
 				break;
 			}
 		} catch (Exception e) {
