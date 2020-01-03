@@ -28,6 +28,7 @@ public class ClientSide {
 	public static void main(String[] args) {
 		serverName = "192.168.1.110";
 		serverName = "192.168.43.190"; // brice
+		// serverName = "172.20.10.12";
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
@@ -37,7 +38,7 @@ public class ClientSide {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
 
-			// Choose wisely
+			// Choose wisely (register or connect)
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
 			System.out.println(serverMessage.readLine());
@@ -109,6 +110,7 @@ public class ClientSide {
 		printWriter.println(myChoice);
 
 		executeAction(myChoice);
+		// chooseAction();
 	}
 
 	public static void executeAction(int myChoice) {
@@ -121,6 +123,8 @@ public class ClientSide {
 				break;
 			case 2:
 				ReceiveList rl = new ReceiveList(clientSocket);
+
+				// working !!!
 				chooseAction();
 				break;
 			case 3:

@@ -7,7 +7,6 @@
 
 package ClientSide;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +52,7 @@ public class SendAFile {
 			// pw.close();
 
 			// File sender
-			while (true) {
+			// while (true) {
 //				OutputStream os = clientSocket.getOutputStream();
 //
 //				byte[] myByteArray = new byte[(int) fileToSend.length()];
@@ -73,25 +72,25 @@ public class SendAFile {
 //					System.out.println(myByteArray[i]);
 //				}
 
-				InputStream in = new FileInputStream(fileToSend);
-				OutputStream out = clientSocket.getOutputStream();
+			InputStream in = new FileInputStream(fileToSend);
+			OutputStream out = clientSocket.getOutputStream();
 
-				byte[] bytes = new byte[(int) length];
-				int count;
-				while ((count = in.read(bytes)) > 0) {
-					out.write(bytes, 0, count);
-				}
+			byte[] bytes = new byte[(int) length];
+			int count;
+			while ((count = in.read(bytes)) > 0) {
+				out.write(bytes, 0, count);
+			}
 
-				for (int i = 0; i < bytes.length; i++) {
-					System.out.print(bytes[i]);
-				}
+			for (int i = 0; i < bytes.length; i++) {
+				System.out.print(bytes[i]);
+			}
 
 //				clientSocket.close();
 
-				System.out.println();
-				System.out.println("File sended.");
-				break;
-			}
+			System.out.println();
+			System.out.println("--> File has been sent to the server <--");
+			// break;
+			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();
