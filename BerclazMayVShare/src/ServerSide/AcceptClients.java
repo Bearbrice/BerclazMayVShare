@@ -145,7 +145,7 @@ public class AcceptClients implements Runnable {
 				// System.out.println(pwdReceived);
 
 				// Check if login is correct or not
-				File users = new File(".\\VSShareCloud\\Users.txt");
+				File users = new File("BerclazMayVShare\\VSShareCloud\\Users.txt");
 
 				BufferedReader br = new BufferedReader(new FileReader(users));
 

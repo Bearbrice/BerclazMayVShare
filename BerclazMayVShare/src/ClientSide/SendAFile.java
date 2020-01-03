@@ -86,11 +86,11 @@ public class SendAFile {
 					System.out.print(bytes[i]);
 				}
 
-				clientSocket.close();
+//				clientSocket.close();
 
-//				System.out.println();
-				System.out.println("Closing Socket...");
-//				break;
+				System.out.println();
+				System.out.println("File sended.");
+				break;
 			}
 
 		} catch (Exception e) {

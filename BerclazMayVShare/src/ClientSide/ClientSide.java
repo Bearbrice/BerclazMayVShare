@@ -28,7 +28,6 @@ public class ClientSide {
 	public static void main(String[] args) {
 		serverName = "192.168.1.110";
 		serverName = "192.168.43.190"; // brice
-		// serverName = "172.20.10.9"; //me
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
@@ -76,6 +75,7 @@ public class ClientSide {
 			printWriter.println(myChoice);
 
 			executeAction(myChoice);
+//			chooseAction();
 
 		} catch (Exception e) {
 			System.out.println("Cannot reach the server, the server is inactive or try again");
@@ -117,7 +117,7 @@ public class ClientSide {
 			// Send a file
 			case 1:
 				SendAFile saf = new SendAFile(clientSocket);
-//				chooseAction();
+				chooseAction();
 				break;
 			case 2:
 				ReceiveList rl = new ReceiveList(clientSocket);

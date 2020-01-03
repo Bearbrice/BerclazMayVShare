@@ -14,15 +14,23 @@ import java.net.Socket;
 public class ReceiveList {
 
 	public ReceiveList(Socket clientSocket) {
+		String temp = "";
+
 		try {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 			while (true) {
-				System.out.println(serverMessage.readLine());
+				temp = serverMessage.readLine();
+				if(temp.equals("DONE")){
+					break;
+				}
+				System.out.println(temp);
 			}
 
-		} catch (Exception e) {
+			System.out.println();
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
