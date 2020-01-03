@@ -23,14 +23,16 @@ public class SendList {
 			e.printStackTrace();
 		}
 
-		String dirName = "BerclazMayVShare\\VSShareCloud\\" + login;
+		String dirName = ".\\VSShareCloud\\" + login;
 
 		File fileName = new File(dirName);
 		File[] fileList = fileName.listFiles();
 
 		for (File file : fileList) {
-			printWriter.println(file.getName());
+			printWriter.println("- " + file.getName());
 		}
+		// Tell the client you sent everything
+		printWriter.println("DONE");
 
 	}
 

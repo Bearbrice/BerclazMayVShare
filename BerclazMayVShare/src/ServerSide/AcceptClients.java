@@ -53,7 +53,7 @@ public class AcceptClients implements Runnable {
 		LocalDateTime now = LocalDateTime.now();
 		// System.out.println(dtf.format(now));
 
-		String logFileName = "BerclazMayVShare\\Logs\\LOG_" + dtf.format(now) + ".log";
+		String logFileName = ".\\Logs\\LOG_" + dtf.format(now) + ".log";
 		// String logFileName = "./my.log";
 
 		try {
@@ -189,6 +189,7 @@ public class AcceptClients implements Runnable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			myLogger.log(Level.SEVERE, "Failed to receive menu choice from client : " + loginReceived);
 		}
 
 		// ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, clientNumber);
@@ -202,6 +203,14 @@ public class AcceptClients implements Runnable {
 			pwFirst = new PrintWriter(clientSocketOnServer.getOutputStream(), true);
 
 			serverMessage = new BufferedReader(new InputStreamReader(clientSocketOnServer.getInputStream()));
+
+			// It is a function to prevent the program to go too fast
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			String first = "Voici les actions disponibles :\n" + "1. Upload a file\n"
 					+ "2. Display list of accessible files\n" + "3. Quit server\n"
@@ -230,6 +239,7 @@ public class AcceptClients implements Runnable {
 			break;
 		// Send the list of file
 		case 2:
+			@SuppressWarnings("unused")
 			SendList sl = new SendList(clientSocketOnServer, loginReceived);
 			performAction();
 			break;

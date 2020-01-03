@@ -8,7 +8,6 @@
 package ServerSide;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -58,7 +57,7 @@ public class ReceivedAFile {
 //			}
 
 			try {
-				out = new FileOutputStream("BerclazMayVShare\\VSShareCloud\\" + loginReceived + "\\" + fileName);
+				out = new FileOutputStream(".\\VSShareCloud\\" + loginReceived + "\\" + fileName);
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
 			}
@@ -68,9 +67,12 @@ public class ReceivedAFile {
 			int count;
 			while ((count = in.read(myByteArray)) > 0) {
 				out.write(myByteArray, 0, count);
+				System.out.println("BOUCLE");
 			}
 
 			out.flush();
+
+			System.out.println("TEST IF GOES OR NOT");
 
 			System.out.print("Bytes received : ");
 			for (int i = 0; i < myByteArray.length; i++) {
@@ -80,7 +82,7 @@ public class ReceivedAFile {
 			out.close();
 			in.close();
 
-//			serverSocket.close();
+			// serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
