@@ -2,7 +2,7 @@
  * Projet VSShare, AcceptClients
  * Author: B. Berclaz x A. May
  * Date creation: 24.10.2019
- * Date last modification: 27.11.2019
+ * Date last modification: 03.01.2020
  */
 
 package ServerSide;
@@ -16,10 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,49 +31,15 @@ public class AcceptClients implements Runnable {
 
 	String loginReceived;
 
-	public AcceptClients(Socket clientSocketOnServer, int clientCpt) {
+	public AcceptClients(Socket clientSocketOnServer, int clientCpt, Logger myLogger) {
 		this.clientSocketOnServer = clientSocketOnServer;
 		this.clientNumber = clientCpt;
-
+		this.myLogger = myLogger;
 	}
 
 	public void run() {
 
-		/*-----------------------
-		 * LOGGER
-		 * INITIALISATION
-		 * --------------------*/
-		myLogger = Logger.getLogger("testing");
-		FileHandler fh = null;
-
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDateTime now = LocalDateTime.now();
-		// System.out.println(dtf.format(now));
-
-		String logFileName = ".\\Logs\\LOG_" + dtf.format(now) + ".log";
-		// String logFileName = "./my.log";
-
-		try {
-			fh = new FileHandler(logFileName, true);
-			// fh = new FileHandler(logFileName, true); //if you want to add log to a file :
-			// false, for overwrite : true
-		} catch (SecurityException e1) {
-			e1.printStackTrace();
-			e1.getMessage();
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-
-		myLogger.addHandler(fh);
-
-		Logging.SocketFormatter formatter = new Logging.SocketFormatter();
-		fh.setFormatter(formatter);
-
-		/*-----------------------
-		 * LOGGER
-		 * INITIALISED
-		 * --------------------*/
-
+		/* CONNECTION FROM A CLIENT */
 		System.out.println("Client number " + clientNumber + " is connected.");
 
 		try {
@@ -210,6 +173,7 @@ public class AcceptClients implements Runnable {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
+				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
 				e.printStackTrace();
 			}
 
@@ -243,20 +207,20 @@ public class AcceptClients implements Runnable {
 		// Receive a file
 		case 1:
 			@SuppressWarnings("unused")
-			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, loginReceived);
+			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			// SendList sl1 = new SendList(clientSocketOnServer, loginReceived);
 			break;
 		// Send the list of file
 		case 2:
 			@SuppressWarnings("unused")
-			SendList sl2 = new SendList(clientSocketOnServer, loginReceived);
+			SendList sl2 = new SendList(clientSocketOnServer, loginReceived, myLogger);
 			// working
 			performAction();
 			break;
 		// Delete a file
 		case 3:
-			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived);
+			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
 		// Send a file to the client
@@ -267,7 +231,14 @@ public class AcceptClients implements Runnable {
 			break;
 		// End of the program
 		case 5:
+			try {
+				clientSocketOnServer.close();
+			} catch (IOException e) {
+				myLogger.log(Level.SEVERE, "User " + loginReceived + " has failed to close the connection.");
+			}
+			myLogger.log(Level.WARNING, "User " + loginReceived + " has closed the connection.");
 			break;
+
 		}
 	}
 
@@ -277,19 +248,17 @@ public class AcceptClients implements Runnable {
 		try {
 			fileWriter = new FileWriter(filename, true);
 			bufWriter = new BufferedWriter(fileWriter);
-			// Insérer un saut de ligne
+			// Insert a line break
 			bufWriter.newLine();
 			bufWriter.write(text);
 			bufWriter.close();
 		} catch (IOException ex) {
-			// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
-			myLogger.log(Level.SEVERE, "Method append - Failed to list file");
+			myLogger.log(Level.SEVERE, "Method append - Failed to do files list");
 		} finally {
 			try {
 				bufWriter.close();
 				fileWriter.close();
 			} catch (IOException ex) {
-				// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
 				myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
 			}
 		}

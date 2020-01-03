@@ -7,9 +7,15 @@
 
 package ServerSide;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ServerSideMain {
 
@@ -22,14 +28,54 @@ public class ServerSideMain {
 		ServerSocket mySkServer;
 		int clientCpt = 1;
 
+		Logger myLogger = null;
+
 		try {
+			/*-----------------------
+			 * LOGGER
+			 * INITIALISATION
+			 * --------------------*/
+
+			// Initialize logger
+			myLogger = Logger.getLogger("testing");
+
+			FileHandler fh = null;
+
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDateTime now = LocalDateTime.now();
+			// System.out.println(dtf.format(now));
+
+			String logFileName = ".\\Logs\\LOG_" + dtf.format(now) + ".log";
+			// String logFileName = "./my.log";
+
+			try {
+				fh = new FileHandler(logFileName, true);
+				// fh = new FileHandler(logFileName, true); //if you want to add log to a file :
+				// false, for overwrite : true
+			} catch (SecurityException e1) {
+				e1.printStackTrace();
+				e1.getMessage();
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+
+			myLogger.addHandler(fh);
+
+			Logging.SocketFormatter formatter = new Logging.SocketFormatter();
+			fh.setFormatter(formatter);
+
+			/*-----------------------
+			 * LOGGER
+			 * INITIALISED
+			 * --------------------*/
+
 			System.out.println("<--- Start listening to clients --->");
 
 			mySkServer = new ServerSocket(port, 10, localAddress);
 
 			while (true) {
 				Socket clientSocket = mySkServer.accept();
-				Thread t = new Thread(new AcceptClients(clientSocket, clientCpt));
+				Thread t = new Thread(new AcceptClients(clientSocket, clientCpt, myLogger));
 				clientCpt++;
 
 				// Starting the thread
@@ -38,6 +84,7 @@ public class ServerSideMain {
 			}
 
 		} catch (Exception e) {
+			myLogger.log(Level.SEVERE, "Exception occured in main programm. Port used : " + port);
 			e.printStackTrace();
 		}
 

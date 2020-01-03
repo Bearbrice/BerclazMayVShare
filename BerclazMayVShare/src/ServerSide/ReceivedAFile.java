@@ -18,10 +18,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReceivedAFile {
 
-	public ReceivedAFile(Socket serverSocket, String loginReceived) {
+	static Logger myLogger;
+
+	public ReceivedAFile(Socket serverSocket, String loginReceived, Logger myLogger) {
+
+		this.myLogger = myLogger;
 
 		try {
 			// Asking for the file
@@ -72,6 +78,7 @@ public class ReceivedAFile {
 				out = new FileOutputStream(".\\VSShareCloud\\" + loginReceived + "\\" + fileName);
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
+				myLogger.log(Level.SEVERE, "File not found.");
 			}
 
 			byte[] myByteArray = new byte[fileLength];
@@ -109,6 +116,7 @@ public class ReceivedAFile {
 			// serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			myLogger.log(Level.SEVERE, "Failed to receive file.");
 		}
 	}
 
@@ -124,14 +132,14 @@ public class ReceivedAFile {
 			bufWriter.close();
 		} catch (IOException ex) {
 			// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
-			// myLogger.log(Level.SEVERE, "Method append - Failed to list file");
+			myLogger.log(Level.SEVERE, "Method append - Failed to list file");
 		} finally {
 			try {
 				bufWriter.close();
 				fileWriter.close();
 			} catch (IOException ex) {
 				// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
-				// myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
+				myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
 			}
 		}
 	}

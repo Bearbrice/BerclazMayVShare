@@ -14,11 +14,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DeleteFile {
 
+	String fileToDelete;
+
 	// Constructor
-	public DeleteFile(Socket serverSocket, String login) {
+	public DeleteFile(Socket serverSocket, String login, Logger myLogger) {
 
 		PrintWriter pw;
 		// ProcessBuilder builder;
@@ -31,7 +35,6 @@ public class DeleteFile {
 			// Getting the file to delete
 			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
-			String fileToDelete;
 			fileToDelete = buffin.readLine();
 			System.out.println("The file to delete is :" + fileToDelete);
 
@@ -97,7 +100,7 @@ public class DeleteFile {
 
 						pw = new PrintWriter(serverSocket.getOutputStream(), true);
 						pw.println("Success");
-						// myLogger.log(Level.INFO, "User connection accepted for : " + loginReceived);
+						myLogger.log(Level.INFO, "The file " + fileToDelete + " has been deleted by " + login);
 						break;
 					}
 				}
@@ -105,10 +108,14 @@ public class DeleteFile {
 
 			if (isCorrect == false) {
 				pw.println("Fail");
+				myLogger.log(Level.INFO,
+						"Wrong file name or password for the file " + fileToDelete + "from user :" + login);
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			myLogger.log(Level.SEVERE,
+					"Fatal error when trying to delete file : " + fileToDelete + "from user :" + login);
 		}
 
 	}
