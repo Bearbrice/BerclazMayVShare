@@ -32,9 +32,8 @@ public class AcceptClients implements Runnable {
 	String loginReceived;
 
 	String actions = "Here are the following actions :\n" + "1. Upload a file\n"
-			+ "2. Display list of accessible files\n" + "3. Delete a file\n"
-			+ "4. Download a file from the server\n" + "5. Quit the server\n"
-			+ "Please, enter 1,2,3,4 or 5 to perform an action : ";
+			+ "2. Display list of accessible files\n" + "3. Delete a file\n" + "4. Download a file from the server\n"
+			+ "5. Quit the server\n" + "Please, enter 1,2,3,4 or 5 to perform an action : ";
 
 	public AcceptClients(Socket clientSocketOnServer, int clientCpt, Logger myLogger) {
 		this.clientSocketOnServer = clientSocketOnServer;
@@ -94,6 +93,11 @@ public class AcceptClients implements Runnable {
 				String newUserFolder = ".\\VSShareCloud\\" + newLoginReceived;
 				new File(newUserFolder).mkdirs();
 				myLogger.log(Level.INFO, "New folder created for the new user : " + newLoginReceived);
+
+//				File pwdFile = new File(".\\VSShareCloud\\");
+//				pwdFile.createNewFile();
+
+				createTxt(newLoginReceived);
 
 				// Tell the client he is connected
 				pwFirst.println("Success");
@@ -199,6 +203,19 @@ public class AcceptClients implements Runnable {
 		}
 	}
 
+	public void createTxt(String login) {
+		String path = ".\\VSShareCloud\\" + login + "\\PWD.txt";
+
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(path, "UTF-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// writer.println("");
+		writer.close();
+	}
+
 	// DEV BRICE
 	public void executeAction(int choosen) {
 		switch (choosen) {
@@ -218,14 +235,14 @@ public class AcceptClients implements Runnable {
 			break;
 		// Delete a file
 		case 3:
-
+			SendList sl2 = new SendList(clientSocketOnServer, loginReceived, myLogger);
 			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
 		// Send a file to the client
 		case 4:
 			// ADD HERE
-			SendList sl2 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			SendList sl3 = new SendList(clientSocketOnServer, loginReceived, myLogger);
 			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived);
 			performAction();
 			break;

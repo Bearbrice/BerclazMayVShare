@@ -134,14 +134,13 @@ public class ClientSide {
 				chooseAction();
 				break;
 			case 3:
-
+				ReceiveList rl2 = new ReceiveList(clientSocket);
 				DeleteFileOnServer dfos = new DeleteFileOnServer(clientSocket);
 				chooseAction();
 				break;
 			// Download file from the server
 			case 4:
-				// ADD HERE
-				ReceiveList rl2 = new ReceiveList(clientSocket);
+				ReceiveList rl3 = new ReceiveList(clientSocket);
 				DownloadAFile daf = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
