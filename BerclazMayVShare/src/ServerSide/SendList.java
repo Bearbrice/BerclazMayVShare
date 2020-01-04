@@ -32,6 +32,9 @@ public class SendList {
 		File fileName = new File(dirName);
 		File[] fileList = fileName.listFiles();
 
+		printWriter.println("************************************");
+		printWriter.println("Here are your documents on VSShare :");
+
 		for (File file : fileList) {
 			// Test for not displaying the file with the passwords to the user
 			if (!(file.getName().equals("PWD.txt"))) {

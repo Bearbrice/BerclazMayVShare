@@ -28,7 +28,7 @@ public class ClientSide {
 	public static void main(String[] args) {
 		serverName = "192.168.1.110";
 		serverName = "192.168.43.190"; // brice
-		// serverName = "172.20.10.12";
+		serverName = "172.20.10.12";
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
@@ -134,13 +134,15 @@ public class ClientSide {
 				chooseAction();
 				break;
 			case 3:
+
 				DeleteFileOnServer dfos = new DeleteFileOnServer(clientSocket);
 				chooseAction();
 				break;
 			// Download file from the server
 			case 4:
 				// ADD HERE
-
+				ReceiveList rl2 = new ReceiveList(clientSocket);
+				DownloadAFile daf = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
 			// End of the programm

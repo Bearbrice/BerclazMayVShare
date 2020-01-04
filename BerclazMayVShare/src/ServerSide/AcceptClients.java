@@ -171,7 +171,8 @@ public class AcceptClients implements Runnable {
 			// It is a function to prevent the program to go too fast and let the client
 			// interract
 			try {
-				Thread.sleep(500);
+				Thread.sleep(1500);
+
 			} catch (InterruptedException e) {
 				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
 				e.printStackTrace();
@@ -214,19 +215,21 @@ public class AcceptClients implements Runnable {
 		// Send the list of file
 		case 2:
 			@SuppressWarnings("unused")
-			SendList sl2 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			SendList sl1 = new SendList(clientSocketOnServer, loginReceived, myLogger);
 			// working
 			performAction();
 			break;
 		// Delete a file
 		case 3:
+
 			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
 		// Send a file to the client
 		case 4:
 			// ADD HERE
-
+			SendList sl2 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived);
 			performAction();
 			break;
 		// End of the program
