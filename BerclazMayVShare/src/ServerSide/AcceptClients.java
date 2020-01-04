@@ -31,6 +31,11 @@ public class AcceptClients implements Runnable {
 
 	String loginReceived;
 
+	String actions = "Here are the following actions :\n" + "1. Upload a file\n"
+			+ "2. Display list of accessible files\n" + "3. Delete a file\n"
+			+ "4. Download a file from the server\n" + "5. Quit the server\n"
+			+ "Please, enter 1,2,3,4 or 5 to perform an action : ";
+
 	public AcceptClients(Socket clientSocketOnServer, int clientCpt, Logger myLogger) {
 		this.clientSocketOnServer = clientSocketOnServer;
 		this.clientNumber = clientCpt;
@@ -138,11 +143,7 @@ public class AcceptClients implements Runnable {
 
 			}
 
-			String first = "Here are the following actions :\n" + "1. Upload a file\n"
-					+ "2. Display list of accessible files\n" + "3. Delete a file\n"
-					+ "4. Download a file from the server\n" + "5. Quit the server\n"
-					+ "Please, enter 1,2,3,4 or 5 to perform an action : ";
-			pwFirst.println(first);
+			pwFirst.println(actions);
 
 			// devBBE
 			String choice = serverMessage.readLine();
@@ -178,11 +179,7 @@ public class AcceptClients implements Runnable {
 				e.printStackTrace();
 			}
 
-			String first = "Here are the following actions :\n" + "1. Upload a file\n"
-					+ "2. Display list of accessible files\n" + "3. Delete a file\n"
-					+ "4. Download a file from the server\n" + "5. Quit the server\n"
-					+ "Please, enter 1,2,3,4 or 5 to perform an action : ";
-			pwFirst.println(first);
+			pwFirst.println(actions);
 
 			// devBBE
 			String choice = serverMessage.readLine();

@@ -1,2 +1,5 @@
-Fri Jan 03 16:39:18 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;
-Fri Jan 03 16:39:46 CET 2020;ServerSide.AcceptClients;SEVERE;run;Failed to receive menu choice from client : Aurelien;
+Fri Jan 03 14:50:03 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;
+Fri Jan 03 14:57:50 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;
+Fri Jan 03 14:59:21 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;
+Fri Jan 03 15:00:41 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;
+Fri Jan 03 15:02:07 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Brice;
