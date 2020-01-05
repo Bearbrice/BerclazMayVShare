@@ -21,6 +21,7 @@ public class ClientSide {
 
 	public static Socket clientSocket;
 	public static InetAddress serverAddress;
+
 	public static String serverName = "172.22.22.150";
 
 	public static int port = 45003;
