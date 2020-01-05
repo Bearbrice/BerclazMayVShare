@@ -28,7 +28,7 @@ public class ClientSide {
 	public static void main(String[] args) {
 		serverName = "192.168.1.110";
 		serverName = "192.168.43.190"; // brice
-		serverName = "172.20.10.12";
+		// serverName = "172.20.10.12";
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
