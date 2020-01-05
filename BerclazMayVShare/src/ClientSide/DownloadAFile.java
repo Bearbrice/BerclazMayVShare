@@ -50,7 +50,6 @@ public class DownloadAFile {
 				System.out.println("Can't get socket input stream. ");
 			}
 
-
 			// OutputStream
 			try {
 				String home = System.getProperty("user.home");

@@ -63,7 +63,6 @@ public class ThrowAFile {
 			pw.println(length);
 			System.out.println("File length sended \t:\t" + length);
 
-
 			// Set up the streams
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = serverSocket.getOutputStream();
