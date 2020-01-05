@@ -69,7 +69,7 @@ public class ServerSideMain {
 			 * INITIALISED
 			 * --------------------*/
 
-			System.out.println("<--- Start listening to clients --->");
+			myLogger.log(Level.INFO, "<--- Start listening to clients --->");
 
 			mySkServer = new ServerSocket(port, 10, localAddress);
 

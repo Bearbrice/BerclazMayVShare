@@ -44,7 +44,8 @@ public class AcceptClients implements Runnable {
 	public void run() {
 
 		/* CONNECTION FROM A CLIENT */
-		System.out.println("Client number " + clientNumber + " is connected.");
+		// System.out.println("Client number " + clientNumber + " is connected.");
+		myLogger.log(Level.INFO, "---> Client number " + clientNumber + " is connected. <---");
 
 		try {
 			PrintWriter pwFirst = new PrintWriter(clientSocketOnServer.getOutputStream(), true);
@@ -143,6 +144,7 @@ public class AcceptClients implements Runnable {
 					pwFirst.println("Refused");
 					myLogger.log(Level.WARNING, "Failed to connect with the username : " + loginReceived);
 					clientSocketOnServer.close();
+					return;
 				}
 
 			}
@@ -157,8 +159,9 @@ public class AcceptClients implements Runnable {
 			executeAction(choosen);
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			myLogger.log(Level.SEVERE, "Failed to receive menu choice from client : " + loginReceived);
+			// e.printStackTrace();
+			myLogger.log(Level.SEVERE, "Failed to receive menu choice from client : " + loginReceived
+					+ " or the connection to the client crashed.");
 		}
 
 		// ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, clientNumber);

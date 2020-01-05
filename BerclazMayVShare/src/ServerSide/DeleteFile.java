@@ -8,8 +8,12 @@
 package ServerSide;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -92,13 +96,28 @@ public class DeleteFile {
 //						}
 
 						// Delete the file on exit
-						fToDelete.deleteOnExit();
+
+						// pw.close();
+
+						// file.deleteOnExit(); //deletes the file when JVM terminates
+//						System.out.println("DEV - PUT THE THREAD TO SLEEP");
+						fToDelete.delete();
+
+						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), fileToDelete));
+						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), pass));
+
+						// removeLineFromFile(pwd.toString(), fileToDelete);
+						// removeLineFromFile(pwd.toString(), pass);
+						// Thread.sleep(3000);
+
+						// fToDelete.delete();
+
+						// pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
 						// System.out.print(success);
 
 						// Files.delete(path);
 
-						pw = new PrintWriter(serverSocket.getOutputStream(), true);
 						pw.println("Success");
 						myLogger.log(Level.INFO, "The file " + fileToDelete + " has been deleted by " + login);
 						break;
@@ -118,5 +137,49 @@ public class DeleteFile {
 					"Fatal error when trying to delete file : " + fileToDelete + "from user :" + login);
 		}
 
+	}
+
+	public static int getLinesToDelete(String file, String word) {
+		try {
+			BufferedReader buf = new BufferedReader(
+					new InputStreamReader(new DataInputStream(new FileInputStream(file))));
+
+			String line;
+			int lineNumber = 0;
+			while ((line = buf.readLine()) != null) {
+				lineNumber++;
+				if (word.equals(line)) {
+					return lineNumber - 1;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
+	public static boolean deleteLine(String fileName, int lineNumber) {
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+
+			StringBuffer sb = new StringBuffer();
+			String line;
+			int nbLinesRead = 0;
+			while ((line = reader.readLine()) != null) {
+				if (nbLinesRead != lineNumber) {
+					sb.append(line + "\n");
+				}
+				nbLinesRead++;
+			}
+			reader.close();
+			BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+			out.write(sb.toString());
+			out.close();
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 }

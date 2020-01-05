@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class ClientSide {
 
 	public static Scanner scan = new Scanner(System.in);
-
 	public static Socket clientSocket;
 	public static InetAddress serverAddress;
 	public static String serverName = "172.22.22.150";
@@ -82,8 +81,9 @@ public class ClientSide {
 //			chooseAction();
 
 		} catch (Exception e) {
-			System.out.println("Cannot reach the server, the server is inactive or try again");
-			e.printStackTrace();
+			System.out.println(
+					"Cannot reach the server, the server is inactive or you have tried wrong username or password. Reload the server.");
+			// e.printStackTrace();
 		}
 	}
 
@@ -146,6 +146,8 @@ public class ClientSide {
 			// End of the programm
 			case 5:
 				// END
+				System.out.println("==> The connection has been gracefully closed <==");
+				clientSocket.close();
 				break;
 
 			}
