@@ -23,14 +23,15 @@ public class ThrowAFile {
 
 	public ThrowAFile(Socket serverSocket, String login) {
 		try {
-			// Asking for the file
+			// Allows to read and print
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
+			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
+
+			// Asking the client for the file
 			String question = "Enter the file you want to download : ";
 			pw.println(question);
 
-			// Getting the file
-			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
-
+			// Reading the file name asked by the client
 			String fileName;
 			fileName = buffin.readLine();
 			System.out.println("File name to throw :" + fileName);
@@ -39,13 +40,10 @@ public class ThrowAFile {
 			// + fileName);
 			File fileToSend = new File(".\\VSShareCloud\\" + login + "\\" + fileName);
 
-			// Confirm the name and send the length
-//			pw.println(fileName);
-//			pw.println(fileToSend.length());
-
 			String name = null;
 			long length = 0;
 
+			// Checking if the file asked exists
 			if (fileToSend.exists()) {
 				name = fileToSend.getName();
 				length = fileToSend.length();
@@ -53,35 +51,41 @@ public class ThrowAFile {
 				System.out.println("Selected file unlocatable.");
 			}
 
+			// Display
 			System.out.println("Selected file name \t:\t" + name);
 			System.out.println("Selected file length \t:\t" + length);
 
-			// File information sender
+			// Sending the file name to the client
 			pw.println(name);
 			System.out.println("File name sended \t:\t" + name);
 
+			// Sending the file length to the client
 			pw.println(length);
 			System.out.println("File length sended \t:\t" + length);
 
+			// Set up the streams
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = serverSocket.getOutputStream();
 
+			// Creating the bytes array
 			byte[] bytes = new byte[(int) length];
 			int count;
+
+			// Reading the file and writing/sending the file to the client
 			while ((count = in.read(bytes)) > 0) {
 				out.write(bytes, 0, count);
 			}
 
+			// Display the bytes sended
 			for (int i = 0; i < bytes.length; i++) {
 				System.out.print(bytes[i]);
 			}
 
 //				clientSocket.close();
 
+			// Display
 			System.out.println();
 			System.out.println("--> File has been sent to the client <--");
-			// break;
-			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();

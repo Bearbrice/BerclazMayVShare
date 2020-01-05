@@ -24,56 +24,58 @@ public class DownloadAFile {
 	public DownloadAFile(Socket serverSocket) {
 
 		try {
+			// Allows to read and print
 			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
-			// Question from the server to choose the file to download
+			// Reading the question from the server to choose the file to download
 			System.out.println(buffin.readLine());
 
 			// Getting the file name entered and send it to the server
 			pw.println(scan.nextLine());
 
+			// Reading the file name and length sended by the server
 			String fileName = buffin.readLine();
 			int fileLength = Integer.parseInt(buffin.readLine());
 			System.out.println("File name : " + fileName + " | length : " + fileLength);
 
-			// Downloading the file
+			// Set up the streams
 			InputStream in = null;
 			FileOutputStream out = null;
 
+			// InputStream
 			try {
 				in = serverSocket.getInputStream();
 			} catch (IOException ex) {
 				System.out.println("Can't get socket input stream. ");
 			}
 
+			// OutputStream
 			try {
 				out = new FileOutputStream("C:\\Users\\brice\\Downloads\\" + fileName);
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
 			}
 
+			// Creating the bytes array
 			byte[] myByteArray = new byte[fileLength];
 
+			// Reading the bytes array sended by the server
 			in.read(myByteArray, 0, myByteArray.length);
 
-			// dev
+			// Display of the bytes received
 			System.out.print("Bytes received : ");
 			for (int i = 0; i < myByteArray.length; i++) {
 				System.out.print(myByteArray[i]);
 			}
 
+			// Writing the byte array (OutputStream)
 			out.write(myByteArray);
-
 			out.flush();
 
-//			System.out.print("Bytes received : ");
-//			for (int i = 0; i < myByteArray.length; i++) {
-//				System.out.print(myByteArray[i] + "-");
-//			}
-
+			// Confirmation message
 			System.out.println();
-			System.out.println("The file will be download in your download folder.");
+			System.out.println("The file has been downloaded in your download folder.");
 
 		} catch (Exception e) {
 			e.printStackTrace();
