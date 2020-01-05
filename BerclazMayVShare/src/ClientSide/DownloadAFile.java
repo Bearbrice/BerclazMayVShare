@@ -52,7 +52,10 @@ public class DownloadAFile {
 
 			// OutputStream
 			try {
-				out = new FileOutputStream("C:\\Users\\brice\\Downloads\\" + fileName);
+				String home = System.getProperty("user.home");
+				// String = new File(home+"/Downloads/" + fileName + ".txt");
+				out = new FileOutputStream(home + "/Downloads/" + fileName);
+				// out = new FileOutputStream("C:\\Users\\brice\\Downloads\\" + fileName);
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
 			}
