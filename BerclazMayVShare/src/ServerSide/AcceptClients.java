@@ -1,5 +1,5 @@
 /*
- * Projet VSShare, AcceptClients
+ * Project VSShare, AcceptClients
  * Author: B. Berclaz x A. May
  * Date creation: 24.10.2019
  * Date last modification: 03.01.2020

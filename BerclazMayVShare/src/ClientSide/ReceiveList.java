@@ -1,5 +1,5 @@
 /*
- * Projet VSShare, SendList
+ * Project VSShare, ReceiveList
  * Author: B. Berclaz x A. May
  * Date creation: 02.01.2020
  * Date last modification: 02.01.2020
@@ -21,7 +21,7 @@ public class ReceiveList {
 
 			while (true) {
 				temp = serverMessage.readLine();
-				if(temp.equals("DONE")){
+				if (temp.equals("DONE")) {
 					break;
 				}
 				System.out.println(temp);

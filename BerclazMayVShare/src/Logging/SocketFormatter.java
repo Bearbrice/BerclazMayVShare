@@ -1,3 +1,10 @@
+/*
+ * Project VSShare, SocketFormatter
+ * Author: B. Berclaz x A. May
+ * Date creation: 02.01.2020
+ * Date last modification: 02.01.2020
+ */
+
 package Logging;
 
 import java.util.Date;

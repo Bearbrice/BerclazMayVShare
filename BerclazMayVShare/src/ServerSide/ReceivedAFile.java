@@ -1,5 +1,5 @@
 /*
- * Projet VSShare, ReceiveAFile
+ * Project VSShare, ReceivedAFile
  * Author: B. Berclaz x A. May
  * Date creation: 24.10.2019
  * Date last modification: 02.01.2020

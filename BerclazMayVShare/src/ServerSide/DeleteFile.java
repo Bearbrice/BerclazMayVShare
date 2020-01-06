@@ -1,5 +1,5 @@
 /*
- * Projet VSShare, DeleteFileOnServer
+ * Project VSShare, DeleteFile
  * Author: B. Berclaz x A. May
  * Date creation: 03.01.2020
  * Date last modification: 03.01.2020

@@ -1,5 +1,5 @@
 /*
- * Projet VSShare, SendList
+ * Project VSShare, SendList
  * Author: B. Berclaz x A. May
  * Date creation: 02.01.2020
  * Date last modification: 02.01.2020
