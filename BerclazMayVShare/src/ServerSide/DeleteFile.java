@@ -49,9 +49,6 @@ public class DeleteFile {
 			pass = buffin.readLine();
 
 			// Control of the password
-
-			// Path path = Paths.get(".\\VSShareCloud\\" + login + "\\PWD.txt");
-
 			// Search in the PWD text file of the user
 			File pwd = new File(".\\VSShareCloud\\" + login + "\\PWD.txt");
 			BufferedReader br = new BufferedReader(new FileReader(pwd));
@@ -59,14 +56,8 @@ public class DeleteFile {
 			// The file to delete
 			File fToDelete = new File(".\\VSShareCloud\\" + login + "\\" + fileToDelete);
 
-//			String path = pwd.getAbsolutePath();
-//			System.out.println(path);
-
 			String path2 = fToDelete.getCanonicalPath();
-			System.out.println(path2);
-
-//			String path3 = pwd.getParent();
-//			System.out.println(path3);
+			// System.out.println(path2);
 
 			Boolean isCorrect = false;
 			String line;
@@ -80,43 +71,12 @@ public class DeleteFile {
 					if (x.equals(pass)) {
 						isCorrect = true;
 
-						// delete the file from the server repository
-						// pw.close();
-
-						// String command = "del " + path2;
-
-//						builder = new ProcessBuilder("cmd.exe", "/c", command);
-//
-//						builder.redirectErrorStream(true);
-//						Process p = null;
-//						try {
-//							p = builder.start();
-//						} catch (IOException e1) {
-//							e1.printStackTrace();
-//						}
-
-						// Delete the file on exit
-
-						// pw.close();
-
-						// file.deleteOnExit(); //deletes the file when JVM terminates
-//						System.out.println("DEV - PUT THE THREAD TO SLEEP");
+						// Delete the file
 						fToDelete.delete();
 
+						// Delete lines in PWD.txt for the user connected
 						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), fileToDelete));
 						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), pass));
-
-						// removeLineFromFile(pwd.toString(), fileToDelete);
-						// removeLineFromFile(pwd.toString(), pass);
-						// Thread.sleep(3000);
-
-						// fToDelete.delete();
-
-						// pw = new PrintWriter(serverSocket.getOutputStream(), true);
-
-						// System.out.print(success);
-
-						// Files.delete(path);
 
 						pw.println("Success");
 						myLogger.log(Level.INFO, "The file " + fileToDelete + " has been deleted by " + login);

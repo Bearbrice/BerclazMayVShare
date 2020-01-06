@@ -1,0 +1,8 @@
+Mon Jan 06 12:37:52 CET 2020;ServerSide.ServerSideMain;INFO;main;<--- Start listening to clients --->;
+Mon Jan 06 12:38:28 CET 2020;ServerSide.ServerSideMain;INFO;main;<--- Start listening to clients --->;
+Mon Jan 06 12:38:29 CET 2020;ServerSide.AcceptClients;INFO;run;---> Client number 1 is connected. <---;
+Mon Jan 06 12:38:33 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;
+Mon Jan 06 12:38:52 CET 2020;ServerSide.ReceivedAFile;SEVERE;<init>;Failed to receive file.;
+Mon Jan 06 12:40:38 CET 2020;ServerSide.ServerSideMain;INFO;main;<--- Start listening to clients --->;
+Mon Jan 06 12:40:39 CET 2020;ServerSide.AcceptClients;INFO;run;---> Client number 1 is connected. <---;
+Mon Jan 06 12:40:42 CET 2020;ServerSide.AcceptClients;INFO;run;User connection accepted for : Aurelien;

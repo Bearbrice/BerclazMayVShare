@@ -36,8 +36,6 @@ public class ThrowAFile {
 			fileName = buffin.readLine();
 			System.out.println("File name to throw :" + fileName);
 
-			// File fileToSend = new File("BerclazMayVShare\\VSShareCloud\\" + login + "\\"
-			// + fileName);
 			File fileToSend = new File(".\\VSShareCloud\\" + login + "\\" + fileName);
 
 			String name = null;
@@ -80,8 +78,6 @@ public class ThrowAFile {
 			for (int i = 0; i < bytes.length; i++) {
 				System.out.print(bytes[i]);
 			}
-
-//				clientSocket.close();
 
 			// Display
 			System.out.println();

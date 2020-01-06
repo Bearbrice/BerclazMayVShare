@@ -44,7 +44,6 @@ public class AcceptClients implements Runnable {
 	public void run() {
 
 		/* CONNECTION FROM A CLIENT */
-		// System.out.println("Client number " + clientNumber + " is connected.");
 		myLogger.log(Level.INFO, "---> Client number " + clientNumber + " is connected. <---");
 
 		try {
@@ -70,10 +69,6 @@ public class AcceptClients implements Runnable {
 				pwFirst.println(newPwd);
 				String newPwdReceived = serverMessage.readLine();
 
-//				File cloudUsers = new File("C:\\temp\\VSShareServer\\Users.txt");
-
-//				FileWriter fw = new FileWriter(cloudUsers);
-
 				String path = ".\\VSShareCloud\\Users.txt";
 
 				// Add a blank line
@@ -84,19 +79,9 @@ public class AcceptClients implements Runnable {
 				append(path, newPwdReceived);
 				myLogger.log(Level.INFO, "New user added in DB : " + newLoginReceived);
 
-//				fw.write("\n"); // forcer le passage à la ligne
-//				fw.write(newLoginReceived); // écrire une ligne dans le fichier Users.txt
-//				fw.write("\n"); // forcer le passage à la ligne
-//				fw.write(newPwdReceived);
-//
-//				fw.close();
-
 				String newUserFolder = ".\\VSShareCloud\\" + newLoginReceived;
 				new File(newUserFolder).mkdirs();
 				myLogger.log(Level.INFO, "New folder created for the new user : " + newLoginReceived);
-
-//				File pwdFile = new File(".\\VSShareCloud\\");
-//				pwdFile.createNewFile();
 
 				createTxt(newLoginReceived);
 
@@ -109,13 +94,9 @@ public class AcceptClients implements Runnable {
 				pwFirst.println(login);
 				loginReceived = serverMessage.readLine();
 
-				// System.out.println(loginReceived);
-
 				String pwd = "Enter your password";
 				pwFirst.println(pwd);
 				String pwdReceived = serverMessage.readLine();
-
-				// System.out.println(pwdReceived);
 
 				// Check if login is correct or not
 				File users = new File(".\\VSShareCloud\\Users.txt");
@@ -126,9 +107,7 @@ public class AcceptClients implements Runnable {
 				String line;
 
 				while ((line = br.readLine()) != null) {
-
 					if (line.equals(loginReceived)) {
-
 						// read next line
 						String x = br.readLine();
 						if (x.equals(pwdReceived)) {
@@ -146,16 +125,13 @@ public class AcceptClients implements Runnable {
 					clientSocketOnServer.close();
 					return;
 				}
-
 			}
 
 			pwFirst.println(actions);
 
-			// devBBE
 			String choice = serverMessage.readLine();
-
-			// devBBE
 			int choosen = Integer.parseInt(choice);
+
 			executeAction(choosen);
 
 		} catch (Exception e) {
@@ -163,8 +139,6 @@ public class AcceptClients implements Runnable {
 			myLogger.log(Level.SEVERE, "Failed to receive menu choice from client : " + loginReceived
 					+ " or the connection to the client crashed.");
 		}
-
-		// ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, clientNumber);
 	}
 
 	public void performAction() {
@@ -188,16 +162,12 @@ public class AcceptClients implements Runnable {
 
 			pwFirst.println(actions);
 
-			// devBBE
 			String choice = serverMessage.readLine();
-
-			// devBBE
 			int choosen = Integer.parseInt(choice);
+
 			executeAction(choosen);
 
 			clientSocketOnServer.close();
-
-			// performAction();
 
 		} catch (IOException e) {
 
@@ -215,7 +185,6 @@ public class AcceptClients implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// writer.println("");
 		writer.close();
 	}
 
@@ -227,13 +196,11 @@ public class AcceptClients implements Runnable {
 			@SuppressWarnings("unused")
 			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
-			// SendList sl1 = new SendList(clientSocketOnServer, loginReceived);
 			break;
 		// Send the list of file
 		case 2:
 			@SuppressWarnings("unused")
 			SendList sl1 = new SendList(clientSocketOnServer, loginReceived, myLogger);
-			// working
 			performAction();
 			break;
 		// Delete a file
@@ -244,7 +211,6 @@ public class AcceptClients implements Runnable {
 			break;
 		// Send a file to the client
 		case 4:
-			// ADD HERE
 			SendList sl3 = new SendList(clientSocketOnServer, loginReceived, myLogger);
 			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived);
 			performAction();

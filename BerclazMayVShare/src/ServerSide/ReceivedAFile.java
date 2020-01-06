@@ -44,8 +44,6 @@ public class ReceivedAFile {
 
 			int fileLength = Integer.parseInt(buffin.readLine());
 			System.out.println("File length received :" + fileLength);
-			// System.out.println("File bytes\t:\t" + buffin.readLine());
-			// buffin.close();
 
 			// DEVELOPPEMENT
 			String question2 = "Enter a password for the file";
@@ -66,14 +64,6 @@ public class ReceivedAFile {
 				System.out.println("Can't get socket input stream. ");
 			}
 
-//			// Creating a directory for our drive if not existing
-//			try {
-//				String cloudPath = "BerclazMayVShare\\VSShareCloud";
-//				new File(cloudPath).mkdirs();
-//			} catch (Exception e) {
-//				System.out.println("Can't create the directory for the drive ");
-//			}
-
 			try {
 				out = new FileOutputStream(".\\VSShareCloud\\" + loginReceived + "\\" + fileName);
 			} catch (FileNotFoundException ex) {
@@ -83,23 +73,9 @@ public class ReceivedAFile {
 
 			byte[] myByteArray = new byte[fileLength];
 
-//			FileInputStream fis = new FileInputStream(myFile);
-//			
-//			BufferedInputStream bis = new BufferedInputStream(fis);
-//			
-//			//the byte array, where you start, where you end
 			in.read(myByteArray, 0, myByteArray.length);
 
 			out.write(myByteArray);
-//			
-//			os.write(mybytesarray);
-//			os.flush();
-
-//			int count;
-//			while ((count = in.read(myByteArray)) > 0) {
-//				out.write(myByteArray, 0, count);
-//				System.out.println("BOUCLE");
-//			}
 
 			out.flush();
 
@@ -109,11 +85,6 @@ public class ReceivedAFile {
 			for (int i = 0; i < myByteArray.length; i++) {
 				System.out.print(myByteArray[i] + "-");
 			}
-
-//			out.close();
-//			in.close();
-
-			// serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			myLogger.log(Level.SEVERE, "Failed to receive file.");
@@ -126,19 +97,17 @@ public class ReceivedAFile {
 		try {
 			fileWriter = new FileWriter(filename, true);
 			bufWriter = new BufferedWriter(fileWriter);
-			// Insérer un saut de ligne
+			// Insert a line break
 			bufWriter.newLine();
 			bufWriter.write(text);
 			bufWriter.close();
 		} catch (IOException ex) {
-			// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
 			myLogger.log(Level.SEVERE, "Method append - Failed to list file");
 		} finally {
 			try {
 				bufWriter.close();
 				fileWriter.close();
 			} catch (IOException ex) {
-				// Logger.getLogger(TextFileWriter.class.getName()).log(Level.SEVERE, null, ex);
 				myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
 			}
 		}

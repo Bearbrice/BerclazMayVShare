@@ -43,15 +43,11 @@ public class ServerSideMain {
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDateTime now = LocalDateTime.now();
-			// System.out.println(dtf.format(now));
 
 			String logFileName = ".\\Logs\\LOG_" + dtf.format(now) + ".log";
-			// String logFileName = "./my.log";
 
 			try {
 				fh = new FileHandler(logFileName, true);
-				// fh = new FileHandler(logFileName, true); //if you want to add log to a file :
-				// false, for overwrite : true
 			} catch (SecurityException e1) {
 				e1.printStackTrace();
 				e1.getMessage();

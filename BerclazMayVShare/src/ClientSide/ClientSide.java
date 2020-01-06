@@ -24,9 +24,7 @@ public class ClientSide {
 	public static int port = 45003;
 
 	public static void main(String[] args) {
-		serverName = "192.168.1.110";
-		serverName = "192.168.43.190"; // brice
-		// serverName = "172.20.10.12";
+		serverName = "127.0.0.1";
 
 		try {
 			serverAddress = InetAddress.getByName(serverName);
@@ -78,7 +76,6 @@ public class ClientSide {
 			printWriter.println(myChoice);
 
 			executeAction(myChoice);
-//			chooseAction();
 
 		} catch (Exception e) {
 			System.out.println(
@@ -108,7 +105,6 @@ public class ClientSide {
 			System.out.println(serverMessage.readLine());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -117,7 +113,6 @@ public class ClientSide {
 		printWriter.println(myChoice);
 
 		executeAction(myChoice);
-		// chooseAction();
 	}
 
 	public static void executeAction(int myChoice) {

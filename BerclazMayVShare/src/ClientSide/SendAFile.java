@@ -27,7 +27,6 @@ public class SendAFile {
 			System.out.println(serverMessage.readLine());
 
 			File fileToSend = new File(scan.nextLine());
-//			File fileToSend = new File("C:\\temp\\test.txt");
 
 			String name = null;
 			long length = 0;
@@ -50,28 +49,6 @@ public class SendAFile {
 
 			pw.println(length);
 			System.out.println("File length sended \t:\t" + length);
-			// pw.close();
-
-			// File sender
-			// while (true) {
-//				OutputStream os = clientSocket.getOutputStream();
-//
-//				byte[] myByteArray = new byte[(int) fileToSend.length()];
-//
-//				// os.write(Integer.parseInt(fileToSend.getName()));
-//
-//				FileInputStream fis = new FileInputStream(fileToSend);
-//
-//				BufferedInputStream bis = new BufferedInputStream(fis);
-//
-//				bis.read(myByteArray, 0, myByteArray.length);
-//
-//				os.flush();
-//
-////				System.out.print("Data file sended : ");
-//				for (int i = 0; i < myByteArray.length; i++) {
-//					System.out.println(myByteArray[i]);
-//				}
 
 			// password
 			System.out.println(serverMessage.readLine());
@@ -92,12 +69,8 @@ public class SendAFile {
 				System.out.print(bytes[i]);
 			}
 
-//				clientSocket.close();
-
 			System.out.println();
 			System.out.println("--> File has been sent to the server <--");
-			// break;
-			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();
