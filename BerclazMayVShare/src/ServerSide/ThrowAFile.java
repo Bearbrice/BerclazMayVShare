@@ -21,7 +21,7 @@ public class ThrowAFile {
 
 	Scanner scan = new Scanner(System.in);
 
-	public ThrowAFile(Socket serverSocket, String login) {
+	public ThrowAFile(Socket serverSocket, String login, boolean shared) {
 		try {
 			// Allows to read and print
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
@@ -36,7 +36,13 @@ public class ThrowAFile {
 			fileName = buffin.readLine();
 			System.out.println("File name to throw :" + fileName);
 
-			File fileToSend = new File(".\\VSShareCloud\\" + login + "\\" + fileName);
+			// Check if the location is the user or the shared folder
+			File fileToSend = null;
+			if (shared == true) {
+				fileToSend = new File(".\\VSShareCloud\\Shared\\" + fileName);
+			} else {
+				fileToSend = new File(".\\VSShareCloud\\" + login + "\\" + fileName);
+			}
 
 			String name = null;
 			long length = 0;

@@ -13,9 +13,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class DeleteFileOnServer {
+public class DeleteSharedFileOnServer {
 
-	public DeleteFileOnServer(Socket clientSocket) {
+	public DeleteSharedFileOnServer(Socket clientSocket) {
 
 		PrintWriter pw;
 		Scanner scan = new Scanner(System.in);
@@ -29,16 +29,16 @@ public class DeleteFileOnServer {
 			String fileName = scan.nextLine();
 			pw.println(fileName);
 
-			// Password
-			System.out.println(serverMessage.readLine());
-			String password = scan.nextLine();
-			pw.println(password);
+//			// Password
+//			System.out.println(serverMessage.readLine());
+//			String password = scan.nextLine();
+//			pw.println(password);
 
-			// Password
+//			// Password
 			if (serverMessage.readLine().equals("Success")) {
-				System.out.println("The file : " + fileName + " has been succesfully deleted.");
+				System.out.println("The file : " + fileName + " will be deleted when you leave the server");
 			} else {
-				System.out.println("Wrong password or file name, please try again");
+				System.out.println("Error, please try again");
 			}
 
 		} catch (Exception e) {

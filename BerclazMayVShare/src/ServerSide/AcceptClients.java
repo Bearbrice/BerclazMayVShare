@@ -33,7 +33,9 @@ public class AcceptClients implements Runnable {
 
 	String actions = "Here are the following actions :\n" + "1. Upload a file\n"
 			+ "2. Display list of accessible files\n" + "3. Delete a file\n" + "4. Download a file from the server\n"
-			+ "5. Quit the server\n" + "Please, enter 1,2,3,4 or 5 to perform an action : ";
+			+ "[SHARE] 5. Copy a local file to the share\n" + "[SHARE] 6. Display available files on the share\n"
+			+ "[SHARE] 7. Delete a file from the share\n" + "[SHARE] 8. Download a file from the share\n"
+			+ "9. Quit the server\n" + "Please, enter 1,2,3,4 or 5 to perform an action : ";
 
 	public AcceptClients(Socket clientSocketOnServer, int clientCpt, Logger myLogger) {
 		this.clientSocketOnServer = clientSocketOnServer;
@@ -212,11 +214,38 @@ public class AcceptClients implements Runnable {
 		// Send a file to the client
 		case 4:
 			SendList sl3 = new SendList(clientSocketOnServer, loginReceived, myLogger);
-			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived);
+			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived, false);
+			performAction();
+			break;
+		// Share a file
+		case 5:
+			SendList sl4 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			CopyAFileInShared cafis = new CopyAFileInShared(clientSocketOnServer, loginReceived, myLogger);
+			performAction();
+			break;
+		// Display list share
+		case 6:
+			@SuppressWarnings("unused")
+			SendShareList shl1 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
+			performAction();
+			break;
+		// Delete from the share
+		case 7:
+
+			SendShareList shl2 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
+			DeleteSharedFile dsf = new DeleteSharedFile(clientSocketOnServer, loginReceived, myLogger);
+			// loginReceived);
+
+			performAction();
+			break;
+		// Download a file from the share
+		case 8:
+			SendShareList shl3 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
+			ThrowAFile taf2 = new ThrowAFile(clientSocketOnServer, loginReceived, true);
 			performAction();
 			break;
 		// End of the program
-		case 5:
+		case 9:
 			try {
 				clientSocketOnServer.close();
 			} catch (IOException e) {

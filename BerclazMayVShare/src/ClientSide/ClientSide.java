@@ -35,19 +35,24 @@ public class ClientSide {
 			PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
 
 			// Choose wisely (register or connect)
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
+
+			readServerMessage(serverMessage, 3);
+
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
 			String welcome = scan.nextLine();
 			printWriter.println(welcome);
 
 			// Login request (register or connect)
-			System.out.println(serverMessage.readLine());
+			readServerMessage(serverMessage, 1);
+//			System.out.println(serverMessage.readLine());
 			String myLogin = scan.nextLine();
 			printWriter.println(myLogin);
 
-			// Password request (register or connect)
-			System.out.println(serverMessage.readLine());
+			/* Password request (register or connect) */
+			readServerMessage(serverMessage, 1);
+//			System.out.println(serverMessage.readLine());
 			String myPwd = scan.nextLine();
 			printWriter.println(myPwd);
 
@@ -56,20 +61,23 @@ public class ClientSide {
 			if (x.equals("Success")) {
 				System.out.println("You are now connected");
 			} else {
-				System.out.println("Failed to connect");
+				System.out.println("Failed to connect. You have been kicked from the server. Please reload it.");
 				clientSocket.close();
+				return;
 			}
 
 			// Action reader (to perform an interaction with the server)
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
+			readServerMessage(serverMessage, 10);
 
-			// +2
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//
+//			// +2
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
 
 			// devBBE
 			int myChoice = scan.nextInt();
@@ -94,15 +102,16 @@ public class ClientSide {
 			printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
 
 			// Action reader (to perform an interaction with the server)
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
-
-			// +2
-			System.out.println(serverMessage.readLine());
-			System.out.println(serverMessage.readLine());
+			readServerMessage(serverMessage, 10);
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
+//
+//			// +2
+//			System.out.println(serverMessage.readLine());
+//			System.out.println(serverMessage.readLine());
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -113,6 +122,16 @@ public class ClientSide {
 		printWriter.println(myChoice);
 
 		executeAction(myChoice);
+	}
+
+	public static void readServerMessage(BufferedReader serverMessage, int loop) {
+		try {
+			for (int i = 0; i < loop; i++) {
+				System.out.println(serverMessage.readLine());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void executeAction(int myChoice) {
@@ -135,11 +154,36 @@ public class ClientSide {
 			// Download file from the server
 			case 4:
 				ReceiveList rl3 = new ReceiveList(clientSocket);
-				DownloadAFile daf = new DownloadAFile(clientSocket);
+				DownloadAFile daf1 = new DownloadAFile(clientSocket);
+				chooseAction();
+				break;
+			case 5:
+				// Share a file
+				ReceiveList rl4 = new ReceiveList(clientSocket);
+				PutAFileOnShared pafos = new PutAFileOnShared(clientSocket);
+				chooseAction();
+				break;
+			// Receive share list
+			case 6:
+				ReceiveList rl5 = new ReceiveList(clientSocket);
+				chooseAction();
+				break;
+			// Delete from the share
+			case 7:
+				ReceiveList rl6 = new ReceiveList(clientSocket);
+				DeleteSharedFileOnServer dsfos = new DeleteSharedFileOnServer(clientSocket);
+				// HERE
+
+				chooseAction();
+				break;
+			// Download a file
+			case 8:
+				ReceiveList rl7 = new ReceiveList(clientSocket);
+				DownloadAFile daf2 = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
 			// End of the programm
-			case 5:
+			case 9:
 				// END
 				System.out.println("==> The connection has been gracefully closed <==");
 				clientSocket.close();
@@ -151,5 +195,4 @@ public class ClientSide {
 		}
 
 	}
-
 }
