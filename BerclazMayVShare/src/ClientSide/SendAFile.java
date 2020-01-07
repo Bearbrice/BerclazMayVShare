@@ -46,7 +46,7 @@ public class SendAFile {
 
 			if (fileType == null) {
 				pw.println("FileNotChosen");
-				System.err.print("You have interrupted the progamm...");
+				System.out.println("!! You have aborted the action !!");
 				return;
 			}
 
