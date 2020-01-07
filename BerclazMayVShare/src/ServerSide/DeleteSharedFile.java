@@ -1,3 +1,10 @@
+/*
+ * Project VSShare, DeleteSharedFile
+ * Author: B. Berclaz x A. May
+ * Date creation: 06.01.2020
+ * Date last modification: 07.01.2020
+ */
+
 package ServerSide;
 
 import java.io.BufferedReader;

@@ -2,7 +2,7 @@
  * Project VSShare, ServerSideMain
  * Author: B. Berclaz x A. May
  * Date creation: 24.10.2019
- * Date last modification: 21.10.2019
+ * Date last modification: 04.01.2020
  */
 
 package ServerSide;

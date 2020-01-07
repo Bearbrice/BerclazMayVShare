@@ -1,3 +1,10 @@
+/*
+ * Project VSShare, PutAFileOnShared
+ * Author: B. Berclaz x A. May
+ * Date creation: 06.01.2020
+ * Date last modification: 06.01.2020
+ */
+
 package ClientSide;
 
 import java.io.BufferedReader;
