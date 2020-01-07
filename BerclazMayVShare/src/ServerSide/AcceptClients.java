@@ -36,7 +36,21 @@ public class AcceptClients implements Runnable {
 			+ "2. Display list of accessible files\n" + "3. Delete a file\n" + "4. Download a file from the server\n"
 			+ "[SHARE] 5. Copy a local file to the share\n" + "[SHARE] 6. Display available files on the share\n"
 			+ "[SHARE] 7. Delete a file from the share\n" + "[SHARE] 8. Download a file from the share\n"
-			+ "9. Quit the server\n" + "Please, enter 1,2,3,4 or 5 to perform an action : ";
+			+ "9. Quit the server\n" + "Please, enter a number from 1 to 9 to perform an action : ";
+
+	String actions2 = "Here are the following actions :\n"
+			+ "1. Upload a file \t \t [SHARE] 5. Copy a local file to the share \n"
+			+ "2. Display list of accessible files \t \t \t \t [SHARE] 6. Display available files on the share \n"
+			+ "3. Delete a file \t \t [SHARE] 7. Delete a file from the share \n"
+			+ "4. Download a file from the server \t \t \t \t [SHARE] 8. Download a file from the share \n"
+			+ "9. Quit the server\n" + "Please, enter a number from 1 to 9 to perform an action : ";
+
+	String actions3 = "Here are the following actions :\n" + "[USER] 1. Upload a file " + "\t \t \t \t"
+			+ "[SHARE] 6. Copy a local file to the share \n" + "[USER] 2. Display list of accessible files" + "\t \t"
+			+ "[SHARE] 7. Display available files on the share \n" + "[USER] 3. Delete a file " + "\t \t \t \t"
+			+ "[SHARE] 8. Delete a file from the share \n" + "[USER] 4. Download a file from the server " + "\t \t"
+			+ "[SHARE] 9. Download a file from the share \n" + "[USER] 5. Quit the server\n"
+			+ "Please, enter a number from 1 to 9 to perform an action : ";
 
 	public AcceptClients(Socket clientSocketOnServer, int clientCpt, Logger myLogger) {
 		this.clientSocketOnServer = clientSocketOnServer;
@@ -97,9 +111,9 @@ public class AcceptClients implements Runnable {
 				new File(newUserFolder).mkdirs();
 				myLogger.log(Level.INFO, "New folder created for the new user : " + newLoginReceived);
 
-				// Calling the method to create the txt file (which will contain the password of
-				// files)
-				createTxt(newLoginReceived);
+//				// Calling the method to create the txt file (which will contain the password of
+//				// files)
+//				createTxt(newLoginReceived);
 
 				// Now the client is connected so we switch him as a current user
 				loginReceived = newLoginReceived;
@@ -156,7 +170,7 @@ public class AcceptClients implements Runnable {
 			}
 
 			// Sending to the client the actions available
-			pwFirst.println(actions);
+			pwFirst.println(actions3);
 
 			// Reading the client choice
 			String choice = serverMessage.readLine();
@@ -192,7 +206,7 @@ public class AcceptClients implements Runnable {
 			}
 
 			// Sending back the actions available
-			pwFirst.println(actions);
+			pwFirst.println(actions3);
 
 			// Reading the client choice
 			String choice = serverMessage.readLine();
@@ -209,23 +223,26 @@ public class AcceptClients implements Runnable {
 		}
 	}
 
-	// Method called to create the txt file which will contain the passwords of the
-	// files
-	public void createTxt(String login) {
-		String path = ".\\VSShareCloud\\" + login + "\\PWD.txt";
-
-		// Writing the txt file
-		PrintWriter writer = null;
-		try {
-			writer = new PrintWriter(path, "UTF-8");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		writer.close();
-	}
+//	// Method called to create the txt file which will contain the passwords of the
+//	// files
+//	public void createTxt(String login) {
+//		String path = ".\\VSShareCloud\\" + login + "\\PWD.txt";
+//
+//		// Writing the txt file
+//		PrintWriter writer = null;
+//		try {
+//			writer = new PrintWriter(path, "UTF-8");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		writer.close();
+//	}
 
 	// Method which execute the action according to the choice of the client
 	public void executeAction(int choosen) {
+		@SuppressWarnings("unused")
+		SendList sl;
+
 		switch (choosen) {
 		// Receive a file
 		case 1:
@@ -236,56 +253,65 @@ public class AcceptClients implements Runnable {
 
 		// Send the list of file
 		case 2:
-			@SuppressWarnings("unused")
-			SendList sl1 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
 			performAction();
 			break;
 
 		// Delete a file (+ send file list)
 		case 3:
-			SendList sl2 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
+			@SuppressWarnings("unused")
 			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
 
 		// Send a file to the client (+ send file list)
 		case 4:
-			SendList sl3 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
+			@SuppressWarnings("unused")
 			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived, false, myLogger);
 			performAction();
 			break;
 
 		// Share a file (+ send file list)
-		case 5:
-			SendList sl4 = new SendList(clientSocketOnServer, loginReceived, myLogger);
+		case 6:
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
+			@SuppressWarnings("unused")
 			CopyAFileInShared cafis = new CopyAFileInShared(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
 
 		// Display list share
-		case 6:
-			@SuppressWarnings("unused")
-			SendShareList shl1 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
+		case 7:
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
+			// SendShareList shl1 = new SendShareList(clientSocketOnServer, loginReceived,
+			// myLogger);
 			performAction();
 			break;
 
 		// Delete from the share (+ send share file list)
-		case 7:
-			SendShareList shl2 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
+		case 8:
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
+			// SendShareList shl2 = new SendShareList(clientSocketOnServer, loginReceived,
+			// myLogger);
+			@SuppressWarnings("unused")
 			DeleteSharedFile dsf = new DeleteSharedFile(clientSocketOnServer, loginReceived, myLogger);
 			// loginReceived);
 			performAction();
 			break;
 
 		// Download a file from the share (+ send share file list)
-		case 8:
-			SendShareList shl3 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
+		case 9:
+			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
+			// SendShareList shl3 = new SendShareList(clientSocketOnServer, loginReceived,
+			// myLogger);
+			@SuppressWarnings("unused")
 			ThrowAFile taf2 = new ThrowAFile(clientSocketOnServer, loginReceived, true, myLogger);
 			performAction();
 			break;
 
 		// End of the program
-		case 9:
+		case 5:
 			try {
 				clientSocketOnServer.close();
 			} catch (IOException e) {

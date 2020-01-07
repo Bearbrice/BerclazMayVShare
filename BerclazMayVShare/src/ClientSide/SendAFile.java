@@ -85,11 +85,11 @@ public class SendAFile {
 			pw.println(length);
 			System.out.println("File length sended \t:\t" + length);
 
-			// Scanning and sending the file password (for the deletion) to the server
-			System.out.println(serverMessage.readLine());
-			String pwd = scan.nextLine();
-			pw.println(pwd);
-			System.out.println("Password sended \t:\t" + pwd);
+//			// Scanning and sending the file password (for the deletion) to the server
+//			System.out.println(serverMessage.readLine());
+//			String pwd = scan.nextLine();
+//			pw.println(pwd);
+//			System.out.println("Password sended \t:\t" + pwd);
 
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = clientSocket.getOutputStream();

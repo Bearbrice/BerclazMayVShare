@@ -23,6 +23,10 @@ public class ClientSide {
 	public static String serverName = "172.22.22.150";
 	public static int port = 45003;
 
+	static ReceiveList rl;
+	static DeleteFileOnServer dfos;
+	static DownloadAFile daf;
+
 	public static void main(String[] args) {
 		// The IP address given is the localhost
 		serverName = "127.0.0.1";
@@ -79,7 +83,7 @@ public class ClientSide {
 			 * Action reader (to perform an interaction with the server) Read the actions
 			 * available for the client
 			 */
-			readServerMessage(serverMessage, 10);
+			readServerMessage(serverMessage, 7);
 
 //			System.out.println(serverMessage.readLine());
 //			System.out.println(serverMessage.readLine());
@@ -115,7 +119,7 @@ public class ClientSide {
 			printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
 
 			// Action reader (to perform an interaction with the server)
-			readServerMessage(serverMessage, 10);
+			readServerMessage(serverMessage, 7);
 //			System.out.println(serverMessage.readLine());
 //			System.out.println(serverMessage.readLine());
 //			System.out.println(serverMessage.readLine());
@@ -152,60 +156,63 @@ public class ClientSide {
 			switch (myChoice) {
 			// Send a file
 			case 1:
+				@SuppressWarnings("unused")
 				SendAFile saf = new SendAFile(clientSocket);
 				chooseAction();
 				break;
 
 			// Receive the list of files of the user connected
 			case 2:
-				ReceiveList rl = new ReceiveList(clientSocket);
+				rl = new ReceiveList(clientSocket);
 				chooseAction();
 				break;
 
 			// Delete a file (+Received the list of files)
 			case 3:
-				ReceiveList rl2 = new ReceiveList(clientSocket);
-				DeleteFileOnServer dfos = new DeleteFileOnServer(clientSocket);
+				rl = new ReceiveList(clientSocket);
+				dfos = new DeleteFileOnServer(clientSocket, false);
 				chooseAction();
 				break;
 
 			// Download file from the server (+Received the list of files)
 			case 4:
-				ReceiveList rl3 = new ReceiveList(clientSocket);
-				DownloadAFile daf1 = new DownloadAFile(clientSocket);
+				rl = new ReceiveList(clientSocket);
+				daf = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
 
 			// Share a file (+Received the list of files on the share)
-			case 5:
-				ReceiveList rl4 = new ReceiveList(clientSocket);
+			case 6:
+				rl = new ReceiveList(clientSocket);
+				@SuppressWarnings("unused")
 				PutAFileOnShared pafos = new PutAFileOnShared(clientSocket);
 				chooseAction();
 				break;
 
 			// Received the list of files on the share
-			case 6:
-				ReceiveList rl5 = new ReceiveList(clientSocket);
+			case 7:
+				rl = new ReceiveList(clientSocket);
 				chooseAction();
 				break;
 
 			// Delete from the share (+Received the list of files on the share)
-			case 7:
-				ReceiveList rl6 = new ReceiveList(clientSocket);
-				DeleteSharedFileOnServer dsfos = new DeleteSharedFileOnServer(clientSocket);
+			case 8:
+				rl = new ReceiveList(clientSocket);
+				dfos = new DeleteFileOnServer(clientSocket, true);
+//				DeleteSharedFileOnServer dsfos = new DeleteSharedFileOnServer(clientSocket);
 				// HERE
 				chooseAction();
 				break;
 
 			// Download a file from the share (+Received the list of files on the share)
-			case 8:
-				ReceiveList rl7 = new ReceiveList(clientSocket);
-				DownloadAFile daf2 = new DownloadAFile(clientSocket);
+			case 9:
+				rl = new ReceiveList(clientSocket);
+				daf = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
 
 			// End the connexion with the server
-			case 9:
+			case 5:
 				System.out.println("==> The connection has been gracefully closed <==");
 				clientSocket.close();
 				break;

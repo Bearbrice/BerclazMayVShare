@@ -42,6 +42,12 @@ public class PutAFileOnShared {
 			pw.println(name);
 			System.out.println("File name sended \t:\t" + name);
 
+			// Scanning and sending the file password (for the deletion) to the server
+			System.out.println(serverMessage.readLine());
+			String pwd = scan.nextLine();
+			pw.println(pwd);
+			System.out.println("Password sended \t:\t" + pwd);
+
 			System.out.println();
 			System.out.println("--> File has been transfered in the Shared <--");
 

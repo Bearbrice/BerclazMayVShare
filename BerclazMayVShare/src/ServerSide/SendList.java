@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class SendList {
 
 	// Constructor
-	public SendList(Socket serverSocket, String login, Logger myLogger) {
+	public SendList(Socket serverSocket, String login, Logger myLogger, boolean shared) {
 
 		PrintWriter printWriter = null;
 		try {
@@ -27,13 +27,23 @@ public class SendList {
 			e.printStackTrace();
 		}
 
-		String dirName = ".\\VSShareCloud\\" + login;
+		String dirName;
+
+		if (shared == true) {
+			dirName = ".\\VSShareCloud\\Shared";
+		} else {
+			dirName = ".\\VSShareCloud\\" + login;
+		}
 
 		File fileName = new File(dirName);
 		File[] fileList = fileName.listFiles();
 
 		printWriter.println("************************************");
-		printWriter.println("Here are your documents on VSShare :");
+		if (shared == true) {
+			printWriter.println("Here are the documents on the Shared folder of VSShare :");
+		} else {
+			printWriter.println("Here are your documents on VSShare :");
+		}
 
 		// handle error if there is only the pwd file in the folder of the user
 		if (fileList.length == 1) {

@@ -8,10 +8,8 @@
 package ServerSide;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -57,17 +55,19 @@ public class ReceivedAFile {
 			int fileLength = Integer.parseInt(buffin.readLine());
 			System.out.println("File length received :" + fileLength);
 
-			// DEVELOPPEMENT
-			String question2 = "Enter a password for the file";
-			pw.println(question2);
+//			// DEVELOPPEMENT
+//			String question2 = "Enter a password for the file";
+//			pw.println(question2);
+//
+//			String password;
+//			password = buffin.readLine();
+//
+//			System.out.println(loginReceived + fileName + password);
+//
+//			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", fileName);
+//			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", password);
 
-			String password;
-			password = buffin.readLine();
-
-			System.out.println(loginReceived + fileName + password);
-
-			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", fileName);
-			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", password);
+			System.out.println(loginReceived + fileName);
 
 			InputStream in = null;
 			OutputStream out = null;
@@ -102,28 +102,6 @@ public class ReceivedAFile {
 		} catch (Exception e) {
 			e.printStackTrace();
 			myLogger.log(Level.SEVERE, "Failed to receive file.");
-		}
-	}
-
-	public static void append(String filename, String text) {
-		BufferedWriter bufWriter = null;
-		FileWriter fileWriter = null;
-		try {
-			fileWriter = new FileWriter(filename, true);
-			bufWriter = new BufferedWriter(fileWriter);
-			// Insert a line break
-			bufWriter.newLine();
-			bufWriter.write(text);
-			bufWriter.close();
-		} catch (IOException ex) {
-			myLogger.log(Level.SEVERE, "Method append - Failed to list file");
-		} finally {
-			try {
-				bufWriter.close();
-				fileWriter.close();
-			} catch (IOException ex) {
-				myLogger.log(Level.SEVERE, "Method append - Failed to close the writers");
-			}
 		}
 	}
 }

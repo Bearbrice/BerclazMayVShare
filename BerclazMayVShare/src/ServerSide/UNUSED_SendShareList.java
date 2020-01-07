@@ -14,10 +14,10 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SendShareList {
+public class UNUSED_SendShareList {
 
 	// Constructor
-	public SendShareList(Socket serverSocket, String login, Logger myLogger) {
+	public UNUSED_SendShareList(Socket serverSocket, String login, Logger myLogger) {
 
 		PrintWriter printWriter = null;
 		try {
@@ -34,15 +34,24 @@ public class SendShareList {
 
 		printWriter.println("************************************");
 		printWriter.println("Here are the documents on the Share :");
-
 		// handle error if there is only the pwd file in the folder of the user
-		for (File file : fileList) {
-			// Test for not displaying the file with the passwords to the user
-			printWriter.println("- " + file.getName());
+		if (fileList.length == 1) {
+			printWriter.println("!! No file has been found. !!");
+			printWriter.println("DONE");
+			myLogger.log(Level.INFO, "No files are available for user " + login);
+			return;
+		} else {
+			for (File file : fileList) {
+				// Test for not displaying the file with the passwords to the user
+				if (!(file.getName().equals("PWD.txt"))) {
+					printWriter.println("- " + file.getName());
+				}
+			}
+			// Tell the client you sent everything
+			myLogger.log(Level.INFO,
+					"The list of available files in the Share for the user " + login + " has been correctly sent");
+			printWriter.println("DONE");
 		}
-		// Tell the client you sent everything
-		myLogger.log(Level.INFO,
-				"The list of available files in the Share for the user " + login + " has been correctly sent");
-		printWriter.println("DONE");
+
 	}
 }
