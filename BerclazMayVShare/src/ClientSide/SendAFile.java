@@ -33,13 +33,27 @@ public class SendAFile {
 			javax.swing.JFileChooser fc = new javax.swing.JFileChooser();
 			fc.setAcceptAllFileFilterUsed(true);
 			fc.setVisible(true);
-			int u = fc.showOpenDialog(null);
-			fc.showDialog(fc, "Choose");
+			int u = fc.showDialog(fc, "Choose");
+
 			if (u == javax.swing.JFileChooser.APPROVE_OPTION) {
 				// File selectedFile = fc.getSelectedFile();
 				fileType = fc.getSelectedFile().toString();
 				// sourcePath = selectedFile.getAbsolutePath();
 			}
+
+			// File information sender
+			PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
+
+			if (fileType == null) {
+				pw.println("FileNotChosen");
+				System.err.print("You have interrupted the progamm...");
+				return;
+			}
+
+//			if (fileType.equals(null)) {
+//				System.out.println("An error occured, please try again.");
+//				return;
+//			}
 
 //			System.out.println("File name : " + fileType);
 //			System.out.println("File path : " + sourcePath);
@@ -60,9 +74,6 @@ public class SendAFile {
 
 			System.out.println("Selected file name \t:\t" + name);
 			System.out.println("Selected file length \t:\t" + length);
-
-			// File information sender
-			PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
 
 			pw.println(name);
 			System.out.println("File name sended \t:\t" + name);
@@ -93,7 +104,7 @@ public class SendAFile {
 			System.out.println("--> File has been sent to the server <--");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("An error occured, please try again.");
 		}
 	}
 }

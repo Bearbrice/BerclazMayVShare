@@ -25,7 +25,13 @@ public class ReceivedAFile {
 
 	static Logger myLogger;
 
+	// Constructor
 	public ReceivedAFile(Socket serverSocket, String loginReceived, Logger myLogger) {
+		receivedAFile(serverSocket, loginReceived, myLogger);
+	}
+
+	// Method called in the constructor
+	public void receivedAFile(Socket serverSocket, String loginReceived, Logger myLogger) {
 
 		this.myLogger = myLogger;
 
@@ -40,6 +46,12 @@ public class ReceivedAFile {
 
 			String fileName;
 			fileName = buffin.readLine();
+
+			if (fileName.equals("FileNotChosen")) {
+				myLogger.log(Level.WARNING, "No file has been chosen in the JFileChooser. Operation cancelled.");
+				return;
+			}
+
 			System.out.println("File name received :" + fileName);
 
 			int fileLength = Integer.parseInt(buffin.readLine());
