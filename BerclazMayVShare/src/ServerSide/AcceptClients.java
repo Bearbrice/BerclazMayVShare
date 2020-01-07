@@ -233,7 +233,7 @@ public class AcceptClients implements Runnable {
 		case 7:
 
 			SendShareList shl2 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
-			DeleteSharedFile dsf = new DeleteSharedFile(clientSocketOnServer, loginReceived, myLogger);
+			DeleteSharedFile_ori dsf = new DeleteSharedFile_ori(clientSocketOnServer, loginReceived, myLogger);
 			// loginReceived);
 
 			performAction();

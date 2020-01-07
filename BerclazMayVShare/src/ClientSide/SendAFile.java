@@ -26,7 +26,26 @@ public class SendAFile {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			System.out.println(serverMessage.readLine());
 
-			File fileToSend = new File(scan.nextLine());
+			/* DEV */
+			String fileType = null;
+			String sourcePath = null;
+
+			javax.swing.JFileChooser fc = new javax.swing.JFileChooser();
+			fc.setAcceptAllFileFilterUsed(true);
+			fc.setVisible(true);
+			int u = fc.showOpenDialog(null);
+			if (u == javax.swing.JFileChooser.APPROVE_OPTION) {
+				// File selectedFile = fc.getSelectedFile();
+				fileType = fc.getSelectedFile().toString();
+				// sourcePath = selectedFile.getAbsolutePath();
+			}
+
+//			System.out.println("File name : " + fileType);
+//			System.out.println("File path : " + sourcePath);
+			/* END DEV */
+
+			File fileToSend = new File(fileType);
+			// File fileToSend = new File(scan.nextLine());
 
 			String name = null;
 			long length = 0;
