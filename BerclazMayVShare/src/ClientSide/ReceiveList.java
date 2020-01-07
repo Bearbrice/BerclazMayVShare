@@ -19,8 +19,11 @@ public class ReceiveList {
 		try {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+			// Reading the file list sended by the server
 			while (true) {
 				temp = serverMessage.readLine();
+
+				// If the list is all sended, the server send a "DONE" to quit the loop
 				if (temp.equals("DONE")) {
 					break;
 				}

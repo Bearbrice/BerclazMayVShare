@@ -37,14 +37,13 @@ public class PutAFileOnShared {
 			// File information sender
 			PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
 
+			// Sending the file name to upload on the share
 			String name = scan.nextLine();
 			pw.println(name);
 			System.out.println("File name sended \t:\t" + name);
 
 			System.out.println();
 			System.out.println("--> File has been transfered in the Shared <--");
-			// break;
-			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();

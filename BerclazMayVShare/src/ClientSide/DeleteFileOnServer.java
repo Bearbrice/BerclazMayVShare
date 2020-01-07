@@ -24,21 +24,28 @@ public class DeleteFileOnServer {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			pw = new PrintWriter(clientSocket.getOutputStream(), true);
 
-			// File to delete
+			// Reading and display the message of the server
 			System.out.println(serverMessage.readLine());
+
+			// Sending the file name to delete
 			String fileName = scan.nextLine();
 			pw.println(fileName);
 
-			// Password
+			// Reading and display the message of the server
 			System.out.println(serverMessage.readLine());
+
+			// Sending the password to delete the file
 			String password = scan.nextLine();
 			pw.println(password);
 
-			// Password
+			/*
+			 * If the password to delete the file is correct, the server send a "Success" If
+			 * not, the file is not delete
+			 */
 			if (serverMessage.readLine().equals("Success")) {
 				System.out.println("The file : " + fileName + " has been succesfully deleted.");
 			} else {
-				System.out.println("Wrong password or file name, please try again");
+				System.out.println("Wrong password or file name.");
 			}
 
 		} catch (Exception e) {

@@ -35,6 +35,7 @@ public class DownloadAFile {
 			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
+			// ????????????????
 			JFileChooser fc = new JFileChooser() {
 				@Override
 				protected JDialog createDialog(Component parent) throws HeadlessException {
@@ -96,6 +97,7 @@ public class DownloadAFile {
 			System.out.println();
 			System.out.println("The file has been downloaded in your download folder.");
 
+			// Opening a file explorer to show where the file has been downloaded
 			Desktop desktop = Desktop.getDesktop();
 			File dirToOpen = null;
 			try {
