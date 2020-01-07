@@ -64,6 +64,8 @@ public class ReceivedAFile {
 			String password;
 			password = buffin.readLine();
 
+			System.out.println(loginReceived + fileName + password);
+
 			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", fileName);
 			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", password);
 

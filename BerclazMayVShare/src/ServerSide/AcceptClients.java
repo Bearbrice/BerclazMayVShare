@@ -101,6 +101,9 @@ public class AcceptClients implements Runnable {
 				// files)
 				createTxt(newLoginReceived);
 
+				// Now the client is connected so we switch him as a current user
+				loginReceived = newLoginReceived;
+
 				// Tell the client he is connected
 				pwFirst.println("Success");
 				break;
