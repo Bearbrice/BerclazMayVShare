@@ -21,6 +21,9 @@ public class SendAFile {
 
 	Scanner scan = new Scanner(System.in);
 
+	/**
+	 * @param clientSocket
+	 */
 	public SendAFile(Socket clientSocket) {
 		try {
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

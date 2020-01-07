@@ -8,8 +8,10 @@
 package ClientSide;
 
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -66,8 +68,9 @@ public class DownloadAFile {
 			}
 
 			// OutputStream
+			String home = null;
 			try {
-				String home = System.getProperty("user.home");
+				home = System.getProperty("user.home");
 				out = new FileOutputStream(home + "/Downloads/" + fileName);
 			} catch (FileNotFoundException ex) {
 				System.out.println("File not found. ");
@@ -92,6 +95,15 @@ public class DownloadAFile {
 			// Confirmation message
 			System.out.println();
 			System.out.println("The file has been downloaded in your download folder.");
+
+			Desktop desktop = Desktop.getDesktop();
+			File dirToOpen = null;
+			try {
+				dirToOpen = new File(home + "/Downloads/");
+				desktop.open(dirToOpen);
+			} catch (IllegalArgumentException iae) {
+				System.out.println("File Not Found");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

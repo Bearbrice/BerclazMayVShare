@@ -157,8 +157,9 @@ public class ClientSide {
 				DownloadAFile daf1 = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
+			// Share a file
 			case 5:
-				// Share a file
+
 				ReceiveList rl4 = new ReceiveList(clientSocket);
 				PutAFileOnShared pafos = new PutAFileOnShared(clientSocket);
 				chooseAction();
@@ -184,7 +185,6 @@ public class ClientSide {
 				break;
 			// End of the programm
 			case 9:
-				// END
 				System.out.println("==> The connection has been gracefully closed <==");
 				clientSocket.close();
 				break;

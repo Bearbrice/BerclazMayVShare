@@ -214,7 +214,7 @@ public class AcceptClients implements Runnable {
 		// Send a file to the client
 		case 4:
 			SendList sl3 = new SendList(clientSocketOnServer, loginReceived, myLogger);
-			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived, false);
+			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived, false, myLogger);
 			performAction();
 			break;
 		// Share a file
@@ -241,7 +241,7 @@ public class AcceptClients implements Runnable {
 		// Download a file from the share
 		case 8:
 			SendShareList shl3 = new SendShareList(clientSocketOnServer, loginReceived, myLogger);
-			ThrowAFile taf2 = new ThrowAFile(clientSocketOnServer, loginReceived, true);
+			ThrowAFile taf2 = new ThrowAFile(clientSocketOnServer, loginReceived, true, myLogger);
 			performAction();
 			break;
 		// End of the program

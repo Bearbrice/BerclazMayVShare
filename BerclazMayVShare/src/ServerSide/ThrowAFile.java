@@ -16,12 +16,14 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ThrowAFile {
 
 	Scanner scan = new Scanner(System.in);
 
-	public ThrowAFile(Socket serverSocket, String login, boolean shared) {
+	public ThrowAFile(Socket serverSocket, String login, boolean shared, Logger myLogger) {
 		try {
 			// Allows to read and print
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
@@ -56,16 +58,16 @@ public class ThrowAFile {
 			}
 
 			// Display
-			System.out.println("Selected file name \t:\t" + name);
-			System.out.println("Selected file length \t:\t" + length);
+			// System.out.println("Selected file name \t:\t" + name);
+			// System.out.println("Selected file length \t:\t" + length);
 
 			// Sending the file name to the client
 			pw.println(name);
-			System.out.println("File name sended \t:\t" + name);
+			// System.out.println("File name sended \t:\t" + name);
 
 			// Sending the file length to the client
 			pw.println(length);
-			System.out.println("File length sended \t:\t" + length);
+			// System.out.println("File length sended \t:\t" + length);
 
 			// Set up the streams
 			InputStream in = new FileInputStream(fileToSend);
@@ -80,17 +82,24 @@ public class ThrowAFile {
 				out.write(bytes, 0, count);
 			}
 
+			String x = "";
+
 			// Display the bytes sended
 			for (int i = 0; i < bytes.length; i++) {
-				System.out.print(bytes[i]);
+				// System.out.print(bytes[i]);
+				x += bytes[i] + " ";
 			}
 
+			myLogger.log(Level.INFO, "File has been sent to the client. // Name " + name + " // Length " + length
+					+ " // Bytes sended " + x);
+
 			// Display
-			System.out.println();
-			System.out.println("--> File has been sent to the client <--");
+			// System.out.println();
+			// System.out.println("--> File has been sent to the client <--");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			myLogger.log(Level.SEVERE, "Fatal error when trying to send a file to the client.");
+			// e.printStackTrace();
 		}
 	}
 }
