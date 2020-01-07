@@ -33,23 +33,26 @@ public class DeleteFile {
 		try {
 			pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
+			// Asking for the name of the file
 			String instruction = "Enter the name of the file you want to delete :";
 			pw.println(instruction);
 
-			// Getting the file to delete
+			// Opening the reader
 			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
+			// Read the file to delete sended
 			fileToDelete = buffin.readLine();
 			System.out.println("The file to delete is :" + fileToDelete);
 
+			// Asking for the password to delete the file
 			String askPassword = "Please enter the password assigned to the file to confirm deletion";
 			pw.println(askPassword);
 
+			// Reading the password sended
 			String pass;
 			pass = buffin.readLine();
 
-			// Control of the password
-			// Search in the PWD text file of the user
+			// Setting the txt file of the files passwords
 			File pwd = new File(".\\VSShareCloud\\" + login + "\\PWD.txt");
 			BufferedReader br = new BufferedReader(new FileReader(pwd));
 
@@ -62,22 +65,22 @@ public class DeleteFile {
 			Boolean isCorrect = false;
 			String line;
 
+			// Loop which read the txt file with files passwords
 			while ((line = br.readLine()) != null) {
-
+				// Test if a line contain the filename
 				if (line.equals(fileToDelete)) {
-
-					// read next line
+					// Read next line (first line is the filename, second the password)
 					String x = br.readLine();
+					// Test if the password is correct
 					if (x.equals(pass)) {
 						isCorrect = true;
-
 						// Delete the file
 						fToDelete.delete();
-
 						// Delete lines in PWD.txt for the user connected
 						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), fileToDelete));
 						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), pass));
 
+						// Send the confirmation message
 						pw.println("Success");
 						myLogger.log(Level.INFO, "The file " + fileToDelete + " has been deleted by " + login);
 						break;
@@ -85,6 +88,7 @@ public class DeleteFile {
 				}
 			}
 
+			// If the password is not matching
 			if (isCorrect == false) {
 				pw.println("Fail");
 				myLogger.log(Level.INFO,
@@ -99,6 +103,7 @@ public class DeleteFile {
 
 	}
 
+	// Method to get the line number of a file which contains a specific word
 	public static int getLinesToDelete(String file, String word) {
 		try {
 			BufferedReader buf = new BufferedReader(
@@ -119,6 +124,7 @@ public class DeleteFile {
 		return -1;
 	}
 
+	// Method to delete a line in a file
 	public static boolean deleteLine(String fileName, int lineNumber) {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));

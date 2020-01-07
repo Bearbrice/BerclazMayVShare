@@ -7,9 +7,7 @@
 
 package ClientSide;
 
-import java.awt.Component;
 import java.awt.Desktop;
-import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,9 +19,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-
 public class DownloadAFile {
 
 	Scanner scan = new Scanner(System.in);
@@ -34,17 +29,6 @@ public class DownloadAFile {
 			// Allows to read and print
 			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
-
-			// ????????????????
-			JFileChooser fc = new JFileChooser() {
-				@Override
-				protected JDialog createDialog(Component parent) throws HeadlessException {
-					// intercept the dialog created by JFileChooser
-					JDialog dialog = super.createDialog(parent);
-					dialog.setModal(true); // set modality (or setModalityType)
-					return dialog;
-				}
-			};
 
 			// Reading the question from the server to choose the file to download
 			System.out.println(buffin.readLine());
