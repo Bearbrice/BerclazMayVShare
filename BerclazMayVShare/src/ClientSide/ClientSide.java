@@ -24,6 +24,7 @@ public class ClientSide {
 	public static int port = 45003;
 
 	public static void main(String[] args) {
+		// The IP address given is the localhost
 		serverName = "127.0.0.1";
 
 		try {
