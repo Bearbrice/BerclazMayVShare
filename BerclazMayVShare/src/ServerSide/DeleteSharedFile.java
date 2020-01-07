@@ -28,8 +28,8 @@ public class DeleteSharedFile {
 			fileToDelete = buffin.readLine();
 			System.out.println("The file to delete is :" + fileToDelete);
 
-			buffin.close();
-			pw.close();
+			// buffin.close();
+			// pw.close();
 
 			// The file to delete
 			File fToDelete = new File(".\\VSShareCloud\\Shared\\" + fileToDelete);
@@ -38,7 +38,6 @@ public class DeleteSharedFile {
 			deleteFile(fToDelete);
 
 			myLogger.log(Level.INFO, "The file " + fileToDelete + " has been deleted by " + login);
-			return;
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -49,7 +48,10 @@ public class DeleteSharedFile {
 
 	public void deleteFile(File f) {
 		if (f.exists()) {
+			System.out.print("THE FILE EXISTS");
 			f.delete();
+		} else {
+			System.out.print("THE FILE DOES NOT EXISTS");
 		}
 
 	}

@@ -171,7 +171,7 @@ public class ClientSide {
 			// Delete from the share
 			case 7:
 				ReceiveList rl6 = new ReceiveList(clientSocket);
-				DeleteSharedFileOnServer_ori dsfos = new DeleteSharedFileOnServer_ori(clientSocket);
+				DeleteSharedFileOnServer dsfos = new DeleteSharedFileOnServer(clientSocket);
 				// HERE
 
 				chooseAction();
