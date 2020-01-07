@@ -34,6 +34,7 @@ public class SendAFile {
 			fc.setAcceptAllFileFilterUsed(true);
 			fc.setVisible(true);
 			int u = fc.showOpenDialog(null);
+			fc.showDialog(fc, "Choose");
 			if (u == javax.swing.JFileChooser.APPROVE_OPTION) {
 				// File selectedFile = fc.getSelectedFile();
 				fileType = fc.getSelectedFile().toString();
