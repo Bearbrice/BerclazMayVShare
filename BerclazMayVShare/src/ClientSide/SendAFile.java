@@ -17,10 +17,21 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Class to send a file to the server
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class SendAFile {
 
 	Scanner scan = new Scanner(System.in);
 
+	/**
+	 * Constructor
+	 * 
+	 * @param clientSocket
+	 */
 	public SendAFile(Socket clientSocket) {
 		try {
 			// Read the server message
@@ -51,15 +62,6 @@ public class SendAFile {
 				return;
 			}
 
-//			if (fileType.equals(null)) {
-//				System.out.println("An error occured, please try again.");
-//				return;
-//			}
-
-//			System.out.println("File name : " + fileType);
-//			System.out.println("File path : " + sourcePath);
-			/* END DEV */
-
 			// Creating the file to send with the path got
 			File fileToSend = new File(fileType);
 
@@ -84,12 +86,6 @@ public class SendAFile {
 			// Sending the file length to the server
 			pw.println(length);
 			System.out.println("File length sended \t:\t" + length);
-
-//			// Scanning and sending the file password (for the deletion) to the server
-//			System.out.println(serverMessage.readLine());
-//			String pwd = scan.nextLine();
-//			pw.println(pwd);
-//			System.out.println("Password sended \t:\t" + pwd);
 
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = clientSocket.getOutputStream();

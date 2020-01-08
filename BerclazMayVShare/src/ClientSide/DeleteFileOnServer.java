@@ -13,8 +13,20 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Class to send information to the server about a file to delete
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class DeleteFileOnServer {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param clientSocket
+	 * @param shared
+	 */
 	public DeleteFileOnServer(Socket clientSocket, boolean shared) {
 
 		PrintWriter pw;

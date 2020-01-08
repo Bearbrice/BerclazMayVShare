@@ -1,1 +1,2 @@
-
+CommonFile.txt
+commonPWD

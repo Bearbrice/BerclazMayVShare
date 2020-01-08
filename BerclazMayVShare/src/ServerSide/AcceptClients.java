@@ -20,6 +20,12 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that execute action on the server according to the customer's wishes
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class AcceptClients implements Runnable {
 
 	static Logger myLogger;
@@ -31,27 +37,21 @@ public class AcceptClients implements Runnable {
 
 	String loginReceived;
 
-	// List of the actions available
-	String actions = "Here are the following actions :\n" + "1. Upload a file\n"
-			+ "2. Display list of accessible files\n" + "3. Delete a file\n" + "4. Download a file from the server\n"
-			+ "[SHARE] 5. Copy a local file to the share\n" + "[SHARE] 6. Display available files on the share\n"
-			+ "[SHARE] 7. Delete a file from the share\n" + "[SHARE] 8. Download a file from the share\n"
-			+ "9. Quit the server\n" + "Please, enter a number from 1 to 9 to perform an action : ";
-
-	String actions2 = "Here are the following actions :\n"
-			+ "1. Upload a file \t \t [SHARE] 5. Copy a local file to the share \n"
-			+ "2. Display list of accessible files \t \t \t \t [SHARE] 6. Display available files on the share \n"
-			+ "3. Delete a file \t \t [SHARE] 7. Delete a file from the share \n"
-			+ "4. Download a file from the server \t \t \t \t [SHARE] 8. Download a file from the share \n"
-			+ "9. Quit the server\n" + "Please, enter a number from 1 to 9 to perform an action : ";
-
-	String actions3 = "Here are the following actions :\n" + "[USER] 1. Upload a file " + "\t \t \t \t"
+	/* List of the actions available */
+	String actions = "Here are the following actions :\n" + "[USER] 1. Upload a file " + "\t \t \t \t"
 			+ "[SHARE] 6. Copy a local file to the share \n" + "[USER] 2. Display list of accessible files" + "\t \t"
 			+ "[SHARE] 7. Display available files on the share \n" + "[USER] 3. Delete a file " + "\t \t \t \t"
 			+ "[SHARE] 8. Delete a file from the share \n" + "[USER] 4. Download a file from the server " + "\t \t"
 			+ "[SHARE] 9. Download a file from the share \n" + "[USER] 5. Quit the server\n"
 			+ "Please, enter a number from 1 to 9 to perform an action : ";
 
+	/**
+	 * Constructor
+	 * 
+	 * @param clientSocketOnServer
+	 * @param clientCpt
+	 * @param myLogger
+	 */
 	public AcceptClients(Socket clientSocketOnServer, int clientCpt, Logger myLogger) {
 		this.clientSocketOnServer = clientSocketOnServer;
 		this.clientNumber = clientCpt;
@@ -77,22 +77,23 @@ public class AcceptClients implements Runnable {
 			String clientChoice = serverMessage.readLine();
 			int userChoice = Integer.parseInt(clientChoice);
 
-			// Switch according the choice
+			/* Switch according the choice (Registration or connection) */
 			switch (userChoice) {
+
+			/* --- REGISTRATION --- */
 			case 1:
-				/* --- REGISTRATION --- */
 				// Sending a message to the client
 				String newLogin = "Choose a username";
 				pwFirst.println(newLogin);
 
-				// Reading the username sended
+				// Reading the username sent
 				String newLoginReceived = serverMessage.readLine();
 
 				// Sending a message to choose the password
 				String newPwd = "Choose a password";
 				pwFirst.println(newPwd);
 
-				// Reading the password sended
+				// Reading the password sent
 				String newPwdReceived = serverMessage.readLine();
 
 				// Setting the path (file which contain the users accounts)
@@ -111,18 +112,15 @@ public class AcceptClients implements Runnable {
 				new File(newUserFolder).mkdirs();
 				myLogger.log(Level.INFO, "New folder created for the new user : " + newLoginReceived);
 
-//				// Calling the method to create the txt file (which will contain the password of
-//				// files)
-//				createTxt(newLoginReceived);
-
 				// Now the client is connected so we switch him as a current user
 				loginReceived = newLoginReceived;
 
 				// Tell the client he is connected
 				pwFirst.println("Success");
 				break;
+
+			/* --- CONNEXION --- */
 			case 2:
-				/* --- CONNEXION --- */
 				// Ask the username
 				String login = "Enter your username";
 				pwFirst.println(login);
@@ -134,7 +132,7 @@ public class AcceptClients implements Runnable {
 				String pwd = "Enter your password";
 				pwFirst.println(pwd);
 
-				// Reading the password sended
+				// Reading the password sent
 				String pwdReceived = serverMessage.readLine();
 
 				// Setting the txt file of user account
@@ -145,11 +143,12 @@ public class AcceptClients implements Runnable {
 
 				// Reading the txt file of user account
 				while ((line = br.readLine()) != null) {
-					// Testing if the username sended match
+
+					// Testing if the username sent match
 					if (line.equals(loginReceived)) {
 						// read next line
 						String x = br.readLine();
-						// Testing if the password sended match
+						// Testing if the password sent match
 						if (x.equals(pwdReceived)) {
 							isCorrect = true;
 							pwFirst.println("Success");
@@ -159,8 +158,10 @@ public class AcceptClients implements Runnable {
 					}
 				}
 
-				// After the loop, if the username and/or password doesn't match, the client is
-				// kicked
+				/*
+				 * After the loop, if the username and/or password doesn't match, the client is
+				 * kicked
+				 */
 				if (isCorrect == false) {
 					pwFirst.println("Refused");
 					myLogger.log(Level.WARNING, "Failed to connect with the username : " + loginReceived);
@@ -170,7 +171,7 @@ public class AcceptClients implements Runnable {
 			}
 
 			// Sending to the client the actions available
-			pwFirst.println(actions3);
+			pwFirst.println(actions);
 
 			// Reading the client choice
 			String choice = serverMessage.readLine();
@@ -195,8 +196,10 @@ public class AcceptClients implements Runnable {
 
 			serverMessage = new BufferedReader(new InputStreamReader(clientSocketOnServer.getInputStream()));
 
-			// It is a function to prevent the program to go too fast and let the client
-			// interact
+			/*
+			 * It is a function to prevent the program to go too fast and let the client
+			 * interact
+			 */
 			try {
 				Thread.sleep(1500);
 
@@ -206,7 +209,7 @@ public class AcceptClients implements Runnable {
 			}
 
 			// Sending back the actions available
-			pwFirst.println(actions3);
+			pwFirst.println(actions);
 
 			// Reading the client choice
 			String choice = serverMessage.readLine();
@@ -223,22 +226,11 @@ public class AcceptClients implements Runnable {
 		}
 	}
 
-//	// Method called to create the txt file which will contain the passwords of the
-//	// files
-//	public void createTxt(String login) {
-//		String path = ".\\VSShareCloud\\" + login + "\\PWD.txt";
-//
-//		// Writing the txt file
-//		PrintWriter writer = null;
-//		try {
-//			writer = new PrintWriter(path, "UTF-8");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		writer.close();
-//	}
-
-	// Method which execute the action according to the choice of the client
+	/**
+	 * Method which execute the action according to the choice of the client
+	 * 
+	 * @param choosen
+	 */
 	public void executeAction(int choosen) {
 		@SuppressWarnings("unused")
 		SendList sl;
@@ -250,13 +242,11 @@ public class AcceptClients implements Runnable {
 			ReceivedAFile fr = new ReceivedAFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
-
 		// Send the list of file
 		case 2:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
 			performAction();
 			break;
-
 		// Delete a file (+ send file list)
 		case 3:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
@@ -264,7 +254,6 @@ public class AcceptClients implements Runnable {
 			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
-
 		// Send a file to the client (+ send file list)
 		case 4:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
@@ -272,7 +261,6 @@ public class AcceptClients implements Runnable {
 			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived, false, myLogger);
 			performAction();
 			break;
-
 		// Share a file (+ send file list)
 		case 6:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
@@ -280,36 +268,25 @@ public class AcceptClients implements Runnable {
 			CopyAFileInShared cafis = new CopyAFileInShared(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
 			break;
-
 		// Display list share
 		case 7:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
-			// SendShareList shl1 = new SendShareList(clientSocketOnServer, loginReceived,
-			// myLogger);
 			performAction();
 			break;
-
 		// Delete from the share (+ send share file list)
 		case 8:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
-			// SendShareList shl2 = new SendShareList(clientSocketOnServer, loginReceived,
-			// myLogger);
 			@SuppressWarnings("unused")
 			DeleteSharedFile dsf = new DeleteSharedFile(clientSocketOnServer, loginReceived, myLogger);
-			// loginReceived);
 			performAction();
 			break;
-
 		// Download a file from the share (+ send share file list)
 		case 9:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
-			// SendShareList shl3 = new SendShareList(clientSocketOnServer, loginReceived,
-			// myLogger);
 			@SuppressWarnings("unused")
 			ThrowAFile taf2 = new ThrowAFile(clientSocketOnServer, loginReceived, true, myLogger);
 			performAction();
 			break;
-
 		// End of the program
 		case 5:
 			try {
@@ -319,12 +296,16 @@ public class AcceptClients implements Runnable {
 			}
 			myLogger.log(Level.WARNING, "User " + loginReceived + " has closed the connection.");
 			break;
-
 		}
 	}
 
-	// Method to write text in a file (for the txt which contain the files
-	// passwords)
+	/**
+	 * Method to write text in a file (for the txt which contain the files
+	 * passwords)
+	 * 
+	 * @param filename
+	 * @param text
+	 */
 	public static void append(String filename, String text) {
 		BufferedWriter bufWriter = null;
 		FileWriter fileWriter = null;

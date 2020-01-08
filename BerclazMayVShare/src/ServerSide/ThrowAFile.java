@@ -19,10 +19,24 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that sends a file stored on the server to a client
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class ThrowAFile {
 
 	Scanner scan = new Scanner(System.in);
 
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 * @param login
+	 * @param shared
+	 * @param myLogger
+	 */
 	public ThrowAFile(Socket serverSocket, String login, boolean shared, Logger myLogger) {
 		try {
 			// Allows to read and print
@@ -57,17 +71,11 @@ public class ThrowAFile {
 				System.out.println("Selected file unlocatable.");
 			}
 
-			// Display
-			// System.out.println("Selected file name \t:\t" + name);
-			// System.out.println("Selected file length \t:\t" + length);
-
 			// Sending the file name to the client
 			pw.println(name);
-			// System.out.println("File name sended \t:\t" + name);
 
 			// Sending the file length to the client
 			pw.println(length);
-			// System.out.println("File length sended \t:\t" + length);
 
 			// Set up the streams
 			InputStream in = new FileInputStream(fileToSend);
@@ -86,20 +94,14 @@ public class ThrowAFile {
 
 			// Display the bytes sended
 			for (int i = 0; i < bytes.length; i++) {
-				// System.out.print(bytes[i]);
 				x += bytes[i] + " ";
 			}
 
 			myLogger.log(Level.INFO, "File has been sent to the client. // Name " + name + " // Length " + length
 					+ " // Bytes sended " + x);
 
-			// Display
-			// System.out.println();
-			// System.out.println("--> File has been sent to the client <--");
-
 		} catch (Exception e) {
 			myLogger.log(Level.SEVERE, "Fatal error when trying to send a file to the client.");
-			// e.printStackTrace();
 		}
 	}
 }

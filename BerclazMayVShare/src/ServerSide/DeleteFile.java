@@ -16,8 +16,21 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that deletes a user file on the server
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class DeleteFile {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 * @param login
+	 * @param myLogger
+	 */
 	public DeleteFile(Socket serverSocket, String login, Logger myLogger) {
 		PrintWriter pw;
 		String fileToDelete = null;
@@ -35,16 +48,11 @@ public class DeleteFile {
 			fileToDelete = buffin.readLine();
 			System.out.println("The file to delete is :" + fileToDelete);
 
-			// buffin.close();
-			// pw.close();
-
 			// The file to delete
 			File fToDelete = new File(".\\VSShareCloud\\" + login + "\\" + fileToDelete);
 
 			// Delete the file
-			deleteFile(fToDelete);
-
-			myLogger.log(Level.INFO, "The file " + fileToDelete + " has been deleted by " + login);
+			deleteFile(fToDelete, myLogger, login);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,12 +61,22 @@ public class DeleteFile {
 		}
 	}
 
-	public void deleteFile(File f) {
+	/**
+	 * Methods to delete a file on the user folder of the server
+	 * 
+	 * @param f        the file you want to delete
+	 * @param myLogger the logger to keep a trace of what is done
+	 * @param login    the login of the person who wants to delete the file
+	 */
+	public void deleteFile(File f, Logger myLogger, String login) {
 		if (f.exists()) {
 			System.out.print("THE FILE EXISTS");
 			f.delete();
+			myLogger.log(Level.INFO, "The file " + f.toString() + " has been deleted by " + login);
 		} else {
 			System.out.print("THE FILE DOES NOT EXISTS");
+			myLogger.log(Level.INFO,
+					"The file " + f.toString() + " does not exists or the name has been typed wrong by " + login);
 		}
 
 	}

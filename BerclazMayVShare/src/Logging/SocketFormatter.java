@@ -11,8 +11,17 @@ import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+/**
+ * Class uses to have a specific format for a Logger
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class SocketFormatter extends Formatter {
 
+	/**
+	 * Constructor
+	 */
 	public SocketFormatter() {
 		super();
 	}

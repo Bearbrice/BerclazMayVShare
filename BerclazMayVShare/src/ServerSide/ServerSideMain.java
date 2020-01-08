@@ -17,6 +17,13 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Main class that runs the server and allows it to handle multiple clients
+ * simultaneously
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class ServerSideMain {
 
 	public static void main(String[] args) {
@@ -32,8 +39,7 @@ public class ServerSideMain {
 
 		try {
 			/*-----------------------
-			 * LOGGER
-			 * INITIALISATION
+			 * LOGGER INITIALISATION
 			 * --------------------*/
 
 			// Initialize logger
@@ -61,10 +67,12 @@ public class ServerSideMain {
 			fh.setFormatter(formatter);
 
 			/*-----------------------
-			 * LOGGER
-			 * INITIALISED
+			 * LOGGER INITIALISED
 			 * --------------------*/
 
+			/*-----------------------
+			 * The server starts to listen to clients
+			 * --------------------*/
 			myLogger.log(Level.INFO, "<--- Start listening to clients --->");
 
 			mySkServer = new ServerSocket(port, 10, localAddress);
@@ -76,7 +84,6 @@ public class ServerSideMain {
 
 				// Starting the thread
 				t.start();
-
 			}
 
 		} catch (Exception e) {

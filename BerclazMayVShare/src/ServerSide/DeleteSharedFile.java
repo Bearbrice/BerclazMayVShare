@@ -21,15 +21,27 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that deletes a shared file on the server according to a password
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class DeleteSharedFile {
 
 	String fileToDelete;
 
-	// Constructor
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 * @param login
+	 * @param myLogger
+	 */
 	public DeleteSharedFile(Socket serverSocket, String login, Logger myLogger) {
 
 		PrintWriter pw;
-		// ProcessBuilder builder;
+
 		try {
 			pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
@@ -60,22 +72,24 @@ public class DeleteSharedFile {
 			File fToDelete = new File(".\\VSShareCloud\\Shared\\" + fileToDelete);
 
 			String path2 = fToDelete.getCanonicalPath();
-			// System.out.println(path2);
 
 			Boolean isCorrect = false;
 			String line;
 
-			// Loop which read the txt file with files passwords
+			/* Loop which read the txt file with files passwords */
 			while ((line = br.readLine()) != null) {
 				// Test if a line contain the filename
 				if (line.equals(fileToDelete)) {
 					// Read next line (first line is the filename, second the password)
 					String x = br.readLine();
-					// Test if the password is correct
+
+					/* Test if the password is correct */
 					if (x.equals(pass)) {
 						isCorrect = true;
+
 						// Delete the file
 						fToDelete.delete();
+
 						// Delete lines in PWD.txt for the user connected
 						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), fileToDelete));
 						deleteLine(pwd.toString(), getLinesToDelete(pwd.toString(), pass));
@@ -87,23 +101,25 @@ public class DeleteSharedFile {
 					}
 				}
 			}
-
 			// If the password is not matching
 			if (isCorrect == false) {
 				pw.println("Fail");
 				myLogger.log(Level.INFO,
 						"Wrong file name or password for the file " + fileToDelete + "from user :" + login);
 			}
-
 		} catch (IOException e) {
-			e.printStackTrace();
 			myLogger.log(Level.SEVERE,
 					"Fatal error when trying to delete file : " + fileToDelete + "from user :" + login);
 		}
-
 	}
 
-	// Method to get the line number of a file which contains a specific word
+	/**
+	 * Method to get the line number of a file which contains a specific word
+	 * 
+	 * @param file
+	 * @param word
+	 * @return
+	 */
 	public static int getLinesToDelete(String file, String word) {
 		try {
 			BufferedReader buf = new BufferedReader(
@@ -124,7 +140,13 @@ public class DeleteSharedFile {
 		return -1;
 	}
 
-	// Method to delete a line in a file
+	/**
+	 * Method to delete a line in a file
+	 * 
+	 * @param fileName
+	 * @param lineNumber
+	 * @return true or false
+	 */
 	public static boolean deleteLine(String fileName, int lineNumber) {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));

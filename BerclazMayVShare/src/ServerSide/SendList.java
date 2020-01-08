@@ -14,9 +14,22 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that sends a list of files stored on the server
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class SendList {
 
-	// Constructor
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 * @param login
+	 * @param myLogger
+	 * @param shared
+	 */
 	public SendList(Socket serverSocket, String login, Logger myLogger, boolean shared) {
 
 		PrintWriter printWriter = null;
@@ -45,7 +58,7 @@ public class SendList {
 			printWriter.println("Here are your documents on VSShare :");
 		}
 
-		// handle error if there is only the pwd file in the folder of the user
+		/* Handle error if there is only the pwd file in the folder of the user */
 		if (fileList.length == 1) {
 			printWriter.println("!! No file has been found. !!");
 			printWriter.println("DONE");

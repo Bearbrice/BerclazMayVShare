@@ -13,26 +13,26 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Class to send information to the server about a file to copy in the share
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class PutAFileOnShared {
 
 	Scanner scan = new Scanner(System.in);
 
+	/**
+	 * Constructor
+	 * 
+	 * @param clientSocket
+	 */
 	public PutAFileOnShared(Socket clientSocket) {
 		try {
 			// Message from the server to choose the file to shared
 			BufferedReader serverMessage = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			System.out.println(serverMessage.readLine());
-
-//            String fileName = scan.nextLine();
-//            File fileToSend = new File("");
-//
-//            String name = null;
-//
-//            if (!fileToSend.exists()) {
-//                System.out.println("Selected file unlocatable.");
-//            }
-//
-//            System.out.println("Selected file name \t:\t" + name);
 
 			// File information sender
 			PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);

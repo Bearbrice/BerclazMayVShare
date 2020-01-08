@@ -11,8 +11,19 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+/**
+ * Class to receive information from the server with the a list of files
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class ReceiveList {
 
+	/**
+	 * Constructor
+	 * 
+	 * @param clientSocket
+	 */
 	public ReceiveList(Socket clientSocket) {
 		String temp = "";
 

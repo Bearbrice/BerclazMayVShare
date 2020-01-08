@@ -19,10 +19,21 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Class to download a file from the server
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class DownloadAFile {
 
 	Scanner scan = new Scanner(System.in);
 
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 */
 	public DownloadAFile(Socket serverSocket) {
 
 		try {

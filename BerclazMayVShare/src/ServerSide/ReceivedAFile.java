@@ -19,16 +19,34 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that receives a file from a client and store it in his folder
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class ReceivedAFile {
 
 	static Logger myLogger;
 
-	// Constructor
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 * @param loginReceived
+	 * @param myLogger
+	 */
 	public ReceivedAFile(Socket serverSocket, String loginReceived, Logger myLogger) {
 		receivedAFile(serverSocket, loginReceived, myLogger);
 	}
 
-	// Method called in the constructor
+	/**
+	 * Main method of the class which is called in the constructor
+	 * 
+	 * @param serverSocket
+	 * @param loginReceived
+	 * @param myLogger
+	 */
 	public void receivedAFile(Socket serverSocket, String loginReceived, Logger myLogger) {
 
 		this.myLogger = myLogger;
@@ -36,7 +54,7 @@ public class ReceivedAFile {
 		try {
 			// Asking for the file
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
-			String question = "Enter the path of the file :";
+			String question = "Please choose a file to import on the server in the window that just opened...";
 			pw.println(question);
 
 			// Getting the file
@@ -45,29 +63,15 @@ public class ReceivedAFile {
 			String fileName;
 			fileName = buffin.readLine();
 
+			/* Handle error if the user close the JFileChooser */
 			if (fileName.equals("FileNotChosen")) {
 				myLogger.log(Level.WARNING, "No file has been chosen in the JFileChooser. Operation cancelled.");
 				return;
 			}
 
-			System.out.println("File name received :" + fileName);
-
 			int fileLength = Integer.parseInt(buffin.readLine());
-			System.out.println("File length received :" + fileLength);
-
-//			// DEVELOPPEMENT
-//			String question2 = "Enter a password for the file";
-//			pw.println(question2);
-//
-//			String password;
-//			password = buffin.readLine();
-//
-//			System.out.println(loginReceived + fileName + password);
-//
-//			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", fileName);
-//			append(".\\VSShareCloud\\" + loginReceived + "\\PWD.txt", password);
-
-			System.out.println(loginReceived + fileName);
+			myLogger.log(Level.INFO, " File name : " + fileName + "," + " File length : " + fileLength
+					+ ", received from : " + loginReceived);
 
 			InputStream in = null;
 			OutputStream out = null;
@@ -75,7 +79,7 @@ public class ReceivedAFile {
 			try {
 				in = serverSocket.getInputStream();
 			} catch (IOException ex) {
-				System.out.println("Can't get socket input stream. ");
+				myLogger.log(Level.SEVERE, "Can't get socket input stream. ");
 			}
 
 			try {
@@ -93,12 +97,13 @@ public class ReceivedAFile {
 
 			out.flush();
 
-			System.out.println("TEST IF GOES OR NOT");
+			String bytesString = "";
 
-			System.out.print("Bytes received : ");
 			for (int i = 0; i < myByteArray.length; i++) {
-				System.out.print(myByteArray[i] + "-");
+				bytesString += myByteArray[i] + " ";
 			}
+			myLogger.log(Level.INFO, "File : " + fileName + ", Bytes received : " + bytesString);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			myLogger.log(Level.SEVERE, "Failed to receive file.");

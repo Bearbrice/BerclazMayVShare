@@ -20,10 +20,24 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class that copy an existing file of a user into the shared folder and store a
+ * password into a text file in the server
+ * 
+ * @author Brice Berclaz
+ * @author Aurelien May
+ */
 public class CopyAFileInShared {
 
 	static Logger myLogger;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param serverSocket
+	 * @param loginReceived
+	 * @param myLogger
+	 */
 	public CopyAFileInShared(Socket serverSocket, String loginReceived, Logger myLogger) {
 
 		this.myLogger = myLogger;
@@ -72,6 +86,12 @@ public class CopyAFileInShared {
 		}
 	}
 
+	/**
+	 * Method that allows to write in a text file
+	 * 
+	 * @param filename the path in string where the text file is located
+	 * @param text     the text you want to add in this text file
+	 */
 	public static void append(String filename, String text) {
 		BufferedWriter bufWriter = null;
 		FileWriter fileWriter = null;
