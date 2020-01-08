@@ -38,19 +38,23 @@ public class ThrowAFile {
 	 * @param myLogger
 	 */
 	public ThrowAFile(Socket serverSocket, String login, boolean shared, Logger myLogger) {
+		throwAFile(serverSocket, login, shared, myLogger);
+	}
+
+	public void throwAFile(Socket serverSocket, String login, boolean shared, Logger myLogger) {
 		try {
 			// Allows to read and print
 			PrintWriter pw = new PrintWriter(serverSocket.getOutputStream(), true);
 			BufferedReader buffin = new BufferedReader(new InputStreamReader(serverSocket.getInputStream()));
 
 			// Asking the client for the file
-			String question = "Enter the file you want to download : ";
+			String question = "Enter the file you want to download (enter q to quit) : ";
 			pw.println(question);
 
 			// Reading the file name asked by the client
 			String fileName;
 			fileName = buffin.readLine();
-			System.out.println("File name to throw :" + fileName);
+			myLogger.log(Level.INFO, login + "File name to throw :" + fileName);
 
 			// Check if the location is the user or the shared folder
 			File fileToSend = null;
@@ -68,7 +72,9 @@ public class ThrowAFile {
 				name = fileToSend.getName();
 				length = fileToSend.length();
 			} else {
-				System.out.println("Selected file unlocatable.");
+				pw.println("WRONG");
+				myLogger.log(Level.INFO, login + "has aborted or typed file name wrong.");
+				return;
 			}
 
 			// Sending the file name to the client

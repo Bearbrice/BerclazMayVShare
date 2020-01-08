@@ -104,6 +104,8 @@ public class ReceivedAFile {
 			}
 			myLogger.log(Level.INFO, "File : " + fileName + ", Bytes received : " + bytesString);
 
+			out.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			myLogger.log(Level.SEVERE, "Failed to receive file.");

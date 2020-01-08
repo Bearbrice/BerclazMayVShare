@@ -35,6 +35,10 @@ public class DownloadAFile {
 	 * @param serverSocket
 	 */
 	public DownloadAFile(Socket serverSocket) {
+		downloadAFile(serverSocket);
+	}
+
+	public void downloadAFile(Socket serverSocket) {
 
 		try {
 			// Allows to read and print
@@ -49,8 +53,13 @@ public class DownloadAFile {
 
 			// Reading the file name and length sended by the server
 			String fileName = buffin.readLine();
+
+			if (fileName.equals("WRONG")) {
+				System.out.println("Aborted or file name typed wrong");
+				return;
+			}
+
 			int fileLength = Integer.parseInt(buffin.readLine());
-			System.out.println("File name : " + fileName + " | length : " + fileLength);
 
 			// Set up the streams
 			InputStream in = null;
@@ -75,22 +84,15 @@ public class DownloadAFile {
 			// Creating the bytes array
 			byte[] myByteArray = new byte[fileLength];
 
-			// Reading the bytes array sended by the server
+			// Reading the bytes array sent by the server
 			in.read(myByteArray, 0, myByteArray.length);
-
-			// Display of the bytes received
-			System.out.print("Bytes received : ");
-			for (int i = 0; i < myByteArray.length; i++) {
-				System.out.print(myByteArray[i]);
-			}
 
 			// Writing the byte array (OutputStream)
 			out.write(myByteArray);
 			out.flush();
 
 			// Confirmation message
-			System.out.println();
-			System.out.println("The file has been downloaded in your download folder.");
+			System.out.println("\n The file " + fileName + " has been downloaded in your download folder. \n");
 
 			// Opening a file explorer to show where the file has been downloaded
 			Desktop desktop = Desktop.getDesktop();

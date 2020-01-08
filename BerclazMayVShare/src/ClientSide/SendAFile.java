@@ -76,16 +76,11 @@ public class SendAFile {
 				System.out.println("Selected file unlocatable.");
 			}
 
-			System.out.println("Selected file name \t:\t" + name);
-			System.out.println("Selected file length \t:\t" + length);
-
 			// Sending the file name to the server
 			pw.println(name);
-			System.out.println("File name sended \t:\t" + name);
 
 			// Sending the file length to the server
 			pw.println(length);
-			System.out.println("File length sended \t:\t" + length);
 
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = clientSocket.getOutputStream();
@@ -97,12 +92,7 @@ public class SendAFile {
 				out.write(bytes, 0, count);
 			}
 
-			for (int i = 0; i < bytes.length; i++) {
-				System.out.print(bytes[i]);
-			}
-
-			System.out.println();
-			System.out.println("--> File has been sent to the server <--");
+			System.out.println("\n --> File " + name + " has been sent to the server <-- \n");
 
 		} catch (Exception e) {
 			System.out.println("An error occured, please try again.");

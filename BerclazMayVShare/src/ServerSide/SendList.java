@@ -59,7 +59,7 @@ public class SendList {
 		}
 
 		/* Handle error if there is only the pwd file in the folder of the user */
-		if (fileList.length == 1) {
+		if (fileList.length == 0) {
 			printWriter.println("!! No file has been found. !!");
 			printWriter.println("DONE");
 			myLogger.log(Level.INFO, "No files are available for user " + login);

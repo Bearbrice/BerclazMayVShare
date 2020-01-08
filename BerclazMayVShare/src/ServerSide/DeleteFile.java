@@ -1,5 +1,5 @@
 /*
- * Project VSShare, DeleteSharedFile
+ * Project VSShare, DeleteFile
  * Author: B. Berclaz x A. May
  * Date creation: 06.01.2020
  * Date last modification: 07.01.2020
@@ -46,7 +46,6 @@ public class DeleteFile {
 
 			// Reading the client message, the file name to delete
 			fileToDelete = buffin.readLine();
-			System.out.println("The file to delete is :" + fileToDelete);
 
 			// The file to delete
 			File fToDelete = new File(".\\VSShareCloud\\" + login + "\\" + fileToDelete);
@@ -70,11 +69,9 @@ public class DeleteFile {
 	 */
 	public void deleteFile(File f, Logger myLogger, String login) {
 		if (f.exists()) {
-			System.out.print("THE FILE EXISTS");
 			f.delete();
 			myLogger.log(Level.INFO, "The file " + f.toString() + " has been deleted by " + login);
 		} else {
-			System.out.print("THE FILE DOES NOT EXISTS");
 			myLogger.log(Level.INFO,
 					"The file " + f.toString() + " does not exists or the name has been typed wrong by " + login);
 		}

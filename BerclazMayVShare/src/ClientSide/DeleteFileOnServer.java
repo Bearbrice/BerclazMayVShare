@@ -59,13 +59,13 @@ public class DeleteFileOnServer {
 				 * not, the file is not delete
 				 */
 				if (serverMessage.readLine().equals("Success")) {
-					System.out.println("The file : " + fileName + " has been succesfully deleted.");
+					System.out.println("The file : " + fileName + " has been deleted successfully from the Shared.");
 				} else {
 					System.out.println("Wrong password or file name.");
 				}
+			} else {
+				System.out.println("The file : " + fileName + " has been succesfully deleted.");
 			}
-
-			System.out.println("The file : " + fileName + " has been deleted successfully from the Shared.");
 
 		} catch (Exception e) {
 			e.printStackTrace();

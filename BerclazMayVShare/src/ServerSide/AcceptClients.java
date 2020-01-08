@@ -38,12 +38,12 @@ public class AcceptClients implements Runnable {
 	String loginReceived;
 
 	/* List of the actions available */
-	String actions = "Here are the following actions :\n" + "[USER] 1. Upload a file " + "\t \t \t \t"
-			+ "[SHARE] 6. Copy a local file to the share \n" + "[USER] 2. Display list of accessible files" + "\t \t"
-			+ "[SHARE] 7. Display available files on the share \n" + "[USER] 3. Delete a file " + "\t \t \t \t"
-			+ "[SHARE] 8. Delete a file from the share \n" + "[USER] 4. Download a file from the server " + "\t \t"
-			+ "[SHARE] 9. Download a file from the share \n" + "[USER] 5. Quit the server\n"
-			+ "Please, enter a number from 1 to 9 to perform an action : ";
+	String actions = "Here are the actions available :\n" + "[USER] 1. Upload a file " + "\t \t \t \t"
+			+ "[SHARE] 6. Copy one of your file to the share \n" + "[USER] 2. Display list of accessible files"
+			+ "\t \t" + "[SHARE] 7. Display available files on the share \n" + "[USER] 3. Delete a file "
+			+ "\t \t \t \t" + "[SHARE] 8. Delete a file from the share \n"
+			+ "[USER] 4. Download a file from the server " + "\t \t" + "[SHARE] 9. Download a file from the share \n"
+			+ "[USER] 5. Quit the server\n" + "Please, enter a number from 1 to 9 to perform an action : ";
 
 	/**
 	 * Constructor
