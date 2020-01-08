@@ -85,7 +85,6 @@ public class ReceivedAFile {
 			try {
 				out = new FileOutputStream(".\\VSShareCloud\\" + loginReceived + "\\" + fileName);
 			} catch (FileNotFoundException ex) {
-				System.out.println("File not found. ");
 				myLogger.log(Level.SEVERE, "File not found.");
 			}
 
@@ -97,12 +96,7 @@ public class ReceivedAFile {
 
 			out.flush();
 
-			String bytesString = "";
-
-			for (int i = 0; i < myByteArray.length; i++) {
-				bytesString += myByteArray[i] + " ";
-			}
-			myLogger.log(Level.INFO, "File : " + fileName + ", Bytes received : " + bytesString);
+			myLogger.log(Level.INFO, "File received : " + fileName + ", from user : " + loginReceived);
 
 			out.close();
 

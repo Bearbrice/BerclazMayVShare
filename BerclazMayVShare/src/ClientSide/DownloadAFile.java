@@ -38,6 +38,11 @@ public class DownloadAFile {
 		downloadAFile(serverSocket);
 	}
 
+	/**
+	 * Main method of the class which is called in the constructor
+	 * 
+	 * @param serverSocket
+	 */
 	public void downloadAFile(Socket serverSocket) {
 
 		try {

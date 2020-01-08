@@ -39,7 +39,6 @@ public class SendAFile {
 			System.out.println(serverMessage.readLine());
 
 			String fileType = null;
-			String sourcePath = null;
 
 			// Opening a file chooser to get the file to upload on the server
 			javax.swing.JFileChooser fc = new javax.swing.JFileChooser();
@@ -82,6 +81,7 @@ public class SendAFile {
 			// Sending the file length to the server
 			pw.println(length);
 
+			@SuppressWarnings("resource")
 			InputStream in = new FileInputStream(fileToSend);
 			OutputStream out = clientSocket.getOutputStream();
 

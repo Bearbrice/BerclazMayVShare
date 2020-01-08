@@ -30,6 +30,7 @@ public class DeleteFileOnServer {
 	public DeleteFileOnServer(Socket clientSocket, boolean shared) {
 
 		PrintWriter pw;
+		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 
 		try {

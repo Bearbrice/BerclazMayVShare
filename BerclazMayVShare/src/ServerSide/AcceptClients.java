@@ -205,7 +205,6 @@ public class AcceptClients implements Runnable {
 
 			} catch (InterruptedException e) {
 				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
-				e.printStackTrace();
 			}
 
 			// Sending back the actions available
@@ -221,8 +220,7 @@ public class AcceptClients implements Runnable {
 			clientSocketOnServer.close();
 
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.print("performAction error");
+			myLogger.log(Level.SEVERE, "performAction error");
 		}
 	}
 

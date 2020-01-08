@@ -41,6 +41,14 @@ public class ThrowAFile {
 		throwAFile(serverSocket, login, shared, myLogger);
 	}
 
+	/**
+	 * Main method of the class which is called in the constructor
+	 * 
+	 * @param serverSocket
+	 * @param login
+	 * @param shared
+	 * @param myLogger
+	 */
 	public void throwAFile(Socket serverSocket, String login, boolean shared, Logger myLogger) {
 		try {
 			// Allows to read and print
