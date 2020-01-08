@@ -88,7 +88,6 @@ public class ServerSideMain {
 
 		} catch (Exception e) {
 			myLogger.log(Level.SEVERE, "Exception occured in main programm. Port used : " + port);
-			e.printStackTrace();
 		}
 
 	}

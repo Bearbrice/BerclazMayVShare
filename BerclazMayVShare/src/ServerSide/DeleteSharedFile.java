@@ -46,7 +46,7 @@ public class DeleteSharedFile {
 			pw = new PrintWriter(serverSocket.getOutputStream(), true);
 
 			// Asking for the name of the file
-			String instruction = "Enter the name of the file you want to delete :";
+			String instruction = "Enter the name of the file you want to delete from the Shared :";
 			pw.println(instruction);
 
 			// Opening the reader

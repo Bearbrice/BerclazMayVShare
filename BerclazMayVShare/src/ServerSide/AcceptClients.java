@@ -181,7 +181,6 @@ public class AcceptClients implements Runnable {
 			executeAction(choosen);
 
 		} catch (Exception e) {
-			// e.printStackTrace();
 			myLogger.log(Level.SEVERE, "Failed to receive menu choice from client : " + loginReceived
 					+ " or the connection to the client crashed.");
 		}
@@ -248,6 +247,13 @@ public class AcceptClients implements Runnable {
 		// Delete a file (+ send file list)
 		case 3:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
+
+			// Prevent the program to go to fast (critical fail in JAR)
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
+			}
 			@SuppressWarnings("unused")
 			DeleteFile df = new DeleteFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
@@ -255,6 +261,12 @@ public class AcceptClients implements Runnable {
 		// Send a file to the client (+ send file list)
 		case 4:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, false);
+			// Prevent the program to go to fast (critical fail in JAR)
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
+			}
 			@SuppressWarnings("unused")
 			ThrowAFile taf = new ThrowAFile(clientSocketOnServer, loginReceived, false, myLogger);
 			performAction();
@@ -274,6 +286,13 @@ public class AcceptClients implements Runnable {
 		// Delete from the share (+ send share file list)
 		case 8:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
+
+			// Prevent the program to go to fast (critical fail in JAR)
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
+			}
 			@SuppressWarnings("unused")
 			DeleteSharedFile dsf = new DeleteSharedFile(clientSocketOnServer, loginReceived, myLogger);
 			performAction();
@@ -281,6 +300,12 @@ public class AcceptClients implements Runnable {
 		// Download a file from the share (+ send share file list)
 		case 9:
 			sl = new SendList(clientSocketOnServer, loginReceived, myLogger, true);
+			// Prevent the program to go to fast (critical fail in JAR)
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				myLogger.log(Level.SEVERE, "Thread failed to sleep.");
+			}
 			@SuppressWarnings("unused")
 			ThrowAFile taf2 = new ThrowAFile(clientSocketOnServer, loginReceived, true, myLogger);
 			performAction();

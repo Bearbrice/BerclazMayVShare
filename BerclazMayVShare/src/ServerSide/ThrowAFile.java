@@ -114,6 +114,8 @@ public class ThrowAFile {
 			myLogger.log(Level.INFO, "File has been sent to the client. // Name " + name + " // Length " + length
 					+ " // Bytes sended " + x);
 
+			in.close();
+
 		} catch (Exception e) {
 			myLogger.log(Level.SEVERE, "Fatal error when trying to send a file to the client.");
 		}

@@ -169,12 +169,16 @@ public class ClientSide {
 			// Delete a file (+Received the list of files)
 			case 3:
 				rl = new ReceiveList(clientSocket);
+				// Prevent the program to go to fast (critical fail in JAR)
+				Thread.sleep(1000);
 				dfos = new DeleteFileOnServer(clientSocket, false);
 				chooseAction();
 				break;
 			// Download file from the server (+Received the list of files)
 			case 4:
 				rl = new ReceiveList(clientSocket);
+				// Prevent the program to go to fast (critical fail in JAR)
+				Thread.sleep(1000);
 				daf = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
@@ -185,7 +189,6 @@ public class ClientSide {
 				PutAFileOnShared pafos = new PutAFileOnShared(clientSocket);
 				chooseAction();
 				break;
-
 			// Received the list of files on the share
 			case 7:
 				rl = new ReceiveList(clientSocket);
@@ -194,13 +197,16 @@ public class ClientSide {
 			// Delete from the share (+Received the list of files on the share)
 			case 8:
 				rl = new ReceiveList(clientSocket);
+				// Prevent the program to go to fast (critical fail in JAR)
+				Thread.sleep(1000);
 				dfos = new DeleteFileOnServer(clientSocket, true);
 				chooseAction();
 				break;
-
 			// Download a file from the share (+Received the list of files on the share)
 			case 9:
 				rl = new ReceiveList(clientSocket);
+				// Prevent the program to go to fast (critical fail in JAR)
+				Thread.sleep(1000);
 				daf = new DownloadAFile(clientSocket);
 				chooseAction();
 				break;
